@@ -43,10 +43,9 @@ int World::getHeight() const
 	return height;
 }
 
-vector<Organism*>& World::getOrganisms()
-{
-	return organisms;
-}
+vector<Organism*>& World::getOrganisms(){return organisms;}
+
+Organism*** World::getMap() { return map; }
 
 void World::drawWorld()
 {
@@ -56,7 +55,7 @@ void World::drawWorld()
 	{
 		for (int x = 0; x < width; x++)
 		{
-			gotoxy(x, y);
+			gotoxy(x+MAP_START_X+1, y+MAP_START_Y+1); //map start includes border, so + 1
 			if(map[y][x]!=nullptr)
 				map[y][x]->draw();
 		}
@@ -100,4 +99,17 @@ void World::drawBorder()
 		cout << BORDER_CHAR;
 	}
 	gotoxy(1, 15);
+}
+
+Organism*& World::getOrganismAtPos(pair<int, int> pos)
+{
+	try {
+		if (pos.first < 0 || pos.first >= width|| pos.second >= height|| pos.second < 0)
+			throw out_of_range("Trying to access position outside of map!");
+	}
+	catch (exception& e)
+	{
+		cerr << "Error: " << e.what() << endl;
+	}
+	return map[pos.second][pos.first];
 }

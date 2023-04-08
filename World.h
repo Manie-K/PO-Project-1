@@ -22,6 +22,8 @@ public:
 	int getWidth() const;
 	int getHeight() const;
 	vector<Organism*>& getOrganisms();
+	Organism*** getMap();
+	Organism*& getOrganismAtPos(pair<int, int> pos);
 
 	void drawWorld();
 	void simulateTurn();
