@@ -12,7 +12,8 @@ int main()
 	_setcursortype(_NOCURSOR);
 	textbackground(BLACK);
 	textcolor(WHITE);
-	World w(3,3);
+	Logger logger(1,21);
+	World w(10,10,logger);
 
 	char input;
 	bool quit = false;
@@ -29,6 +30,7 @@ int main()
 		case NEXT_TURN_KEY:
 			w.simulateTurn();
 			w.drawWorld();
+			logger.display();
 			break;
 		default:
 			break;

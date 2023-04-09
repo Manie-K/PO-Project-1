@@ -2,8 +2,8 @@
 
 using namespace std;
 
-Organism::Organism(World& w, const int s, const int i, const string species,const pair<int, int> pos)
-	:world(w),strenght(s),initiative(i),age(0),species(species)
+Organism::Organism(World& w, Logger& l, const int s, const int i, const string species,const pair<int, int> pos)
+	:world(w),logger(l),strenght(s),initiative(i),age(0),species(species)
 {
 	try {
 		if (pos.first < 0 || pos.second < 0 || pos.first >= world.getWidth() || pos.second >= world.getHeight())

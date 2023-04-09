@@ -5,7 +5,7 @@ using namespace std;
 
 class Wolf : public Animal {
 public:
-	Wolf(World& w, pair<int,int> pos) :Animal(w, 9, 5, "Wolf", pos) {};
+	Wolf(World& w, Logger& l, pair<int,int> pos) :Animal(w,l, 9, 5, "Wolf", pos) {};
 	
 	void draw() override {
 		textcolor(RED);
@@ -13,8 +13,8 @@ public:
 		textcolor(WHITE);
 	}
 
-	Organism* giveBirth(World& w, pair<int, int> pos)const override
+	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos)const override
 	{
-		return new Wolf(w, pos);
+		return new Wolf(w,l, pos);
 	}
 };

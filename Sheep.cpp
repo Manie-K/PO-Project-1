@@ -6,7 +6,7 @@ using namespace std;
 class Sheep : public Animal
 {
 public:
-	Sheep(World& w, pair<int, int> pos) :Animal(w, 4, 4, "Sheep", pos) {};
+	Sheep(World& w, Logger& l, pair<int, int> pos) :Animal(w,l, 4, 4, "Sheep", pos) {};
 
 	void draw() override {
 		textcolor(GREEN);
@@ -14,8 +14,8 @@ public:
 		textcolor(WHITE);
 	}
 
-	Organism* giveBirth(World& w, pair<int, int> pos)const override
+	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos)const override
 	{
-		return new Sheep(w, pos);
+		return new Sheep(w,l, pos);
 	}
 };

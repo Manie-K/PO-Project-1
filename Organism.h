@@ -1,5 +1,6 @@
 #pragma once
 #include "World.h"
+#include "Logger.h"
 #include <iostream>
 #include <string>
 #include <utility>
@@ -17,8 +18,9 @@ protected:
 	string species;
 	pair<int, int> position;
 	World& world;
+	Logger& logger;
 public:
-	Organism(World& w, const int s = 0, const int i = 0, const string species = "",
+	Organism(World& w, Logger& l,const int s = 0, const int i = 0, const string species = "",
 		const pair<int, int> pos = make_pair<int, int>(0, 0));
 	int getStrenght() const;
 	int getInitiative() const;
@@ -36,6 +38,6 @@ public:
 	bool operator<(const Organism* other) const;
 protected:
 	virtual void collision(Organism* defender) = 0;
-	virtual Organism* giveBirth(World& w, pair<int, int> pos) const = 0;
+	virtual Organism* giveBirth(World& w, Logger& l, pair<int, int> pos) const = 0;
 	void killOrganism(Organism* victim);
 };

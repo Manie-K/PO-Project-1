@@ -5,16 +5,16 @@
 #include <iostream>
 
 //EDIT THIS => INITIAL MAP CONFIGURATION
-void World::customInitialMapLoad()
+void World::customInitialMapLoad(Logger& logger)
 {
-	Wolf* w1 = new Wolf(*this, { 2, 2 });
-	Wolf* w2 = new Wolf(*this, {1, 1});
-	Sheep* s1 = new Sheep(*this, { 0, 0 });
-	Sheep* s2 = new Sheep(*this, { 2, 1 });
+	Wolf* w1 = new Wolf(*this,logger, { 2, 2 });
+	Wolf* w2 = new Wolf(*this, logger, {6, 6});
+	Sheep* s1 = new Sheep(*this, logger, { 5, 0 });
+	Sheep* s2 = new Sheep(*this, logger, { 2, 8 });
 }
 //======================================
 
-World::World(int w, int h):width(w),height(h)
+World::World(int w, int h, Logger& logger):width(w),height(h)
 {
 	srand(time(NULL)); //initilize randomness
 
@@ -27,7 +27,7 @@ World::World(int w, int h):width(w),height(h)
 			map[y][x] = nullptr;
 		}
 	}
-	customInitialMapLoad();
+	customInitialMapLoad(logger);
 }
 
 World::~World()

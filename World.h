@@ -6,6 +6,7 @@
 using namespace std;
 
 class Organism;
+class Logger;
 
 class World {
 private:
@@ -14,9 +15,9 @@ private:
 	Organism*** map;
 private:
 	void drawBorder();
-	void customInitialMapLoad();
+	void customInitialMapLoad(Logger& logger);
 public:
-	World(int w = 0, int h = 0);
+	World(int w, int h, Logger& logger);
 	~World();
 
 	int getWidth() const;
