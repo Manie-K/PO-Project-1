@@ -13,3 +13,4 @@
 //animals chars 
 #define WOLF_CHAR 'W'
 #define SHEEP_CHAR 'S'
+#define FOX_CHAR 'F'

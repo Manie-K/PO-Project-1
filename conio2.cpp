@@ -1,9 +1,3 @@
-//PROJECT DONE
-/*
- * template for the course Podstawy Programowania
- * only to be used for the project in this course
- * author: K.M. Ocetkiewicz
- */
 #include<stdio.h>
 #include<malloc.h>
 #include<string.h>

@@ -7,10 +7,14 @@
 //EDIT THIS => INITIAL MAP CONFIGURATION
 void World::customInitialMapLoad(Logger& logger)
 {
-	Wolf* w1 = new Wolf(*this,logger, { 2, 2 });
+	Sheep* s1 = new Sheep(*this, logger, { 1, 0 });
+	Wolf* w1 = new Wolf(*this,logger, { 0, 2 });
 	Wolf* w2 = new Wolf(*this, logger, {6, 6});
-	Sheep* s1 = new Sheep(*this, logger, { 5, 0 });
-	Sheep* s2 = new Sheep(*this, logger, { 2, 8 });
+	Fox* f1 = new Fox(*this, logger, { 3,3 });
+	Fox* f2 = new Fox(*this, logger, { 2,4 });
+	Sheep* s2 = new Sheep(*this, logger, { 6, 3 });
+	Sheep* s3 = new Sheep(*this, logger, { 2, 7 });
+	Sheep* s4 = new Sheep(*this, logger, { 2, 2 });
 }
 //======================================
 
@@ -75,10 +79,18 @@ void World::drawWorld()
 	}
 }
 
+bool World::compareOrganismPointer(const Organism* o1, const Organism* o2)
+{
+	if (o1->getInitiative() == o2->getInitiative())
+	{
+		return o1->getAge() > o2->getAge();
+	}
+	return o1->getInitiative() > o2->getInitiative();
+}
+
 void World::simulateTurn()
 {
-	std::sort(organisms.begin(), organisms.end());
-	reverse(organisms.begin(), organisms.end());
+	sort(organisms.begin(), organisms.end(), compareOrganismPointer);
 
 	int fixedSize = organisms.size();
 	for (int i = 0; i < fixedSize; i++)

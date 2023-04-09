@@ -35,7 +35,6 @@ public:
 	virtual void action() = 0;
 	virtual void draw() = 0;
 
-	bool operator<(const Organism* other) const;
 protected:
 	virtual void collision(Organism* defender) = 0;
 	virtual Organism* giveBirth(World& w, Logger& l, pair<int, int> pos) const = 0;

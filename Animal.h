@@ -14,9 +14,11 @@ protected:
 			return;
 		for (int m = 0; m < moves; m++) {
 			bool foundGoodTile = false;
-			int badTiles = 0;
-			while (!foundGoodTile && badTiles < dirs)
+			bool badTiles[dirs] = { false,false,false,false };
+			while (!foundGoodTile)
 			{
+				if (badTiles[0] && badTiles[1] && badTiles[2] && badTiles[3])
+					return;
 				int random = rand() % dirs;
 				if (random == 0 && position.second > 0) //up
 				{
@@ -25,12 +27,13 @@ protected:
 						world.getOrganismAtPos(position) = nullptr;
 						position.second--;
 						world.getOrganismAtPos(position) = this;
+						foundGoodTile = true;
 					}
 					else if (!goodSmell(dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first,position.second - 1 })))) {
 						collision(world.getOrganismAtPos({ position.first,position.second - 1 }));
 						foundGoodTile = true;
 					}
-					else badTiles++;
+					else badTiles[0]=true;
 				}
 				else if (random == 1 && position.second < world.getHeight() - 1)//bottom
 				{
@@ -39,12 +42,13 @@ protected:
 						world.getOrganismAtPos(position) = nullptr;
 						position.second++;
 						world.getOrganismAtPos(position) = this;
+						foundGoodTile = true;
 					}
 					else if (!goodSmell(dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first,position.second + 1 })))) {
 						collision(world.getOrganismAtPos({ position.first,position.second + 1 }));
 						foundGoodTile = true;
 					}
-					else badTiles++;
+					else badTiles[1] = true;
 				}
 				else if (random == 2 && position.first < world.getWidth() - 1)//right
 				{
@@ -53,12 +57,13 @@ protected:
 						world.getOrganismAtPos(position) = nullptr;
 						position.first++;
 						world.getOrganismAtPos(position) = this;
+						foundGoodTile = true;
 					}
 					else if (!goodSmell(dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first + 1,position.second })))){
 						collision(world.getOrganismAtPos({ position.first + 1,position.second }));
 						foundGoodTile = true;
 					}
-					else badTiles++;
+					else badTiles[2] = true;
 				}
 				else if (random == 3 && position.first > 0)//left
 				{
@@ -67,12 +72,13 @@ protected:
 						world.getOrganismAtPos(position) = nullptr;
 						position.first--;
 						world.getOrganismAtPos(position) = this;
+						foundGoodTile = true;
 					}
 					else if (!goodSmell(dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first - 1,position.second })))) {
 						collision(world.getOrganismAtPos({ position.first - 1,position.second }));
 						foundGoodTile = true;
 					}
-					else badTiles++;
+					else badTiles[3] = true;
 				}
 			}
 		}
@@ -152,11 +158,11 @@ protected:
 		}
 	}
 
-	bool defenderFlee(Animal* defender) { return false; }
-	bool defenderDeflected(Animal* defender) { return false; }
-	bool goodSmell(Animal* defender)const { return false; }
-	int howManyMoves() const { return 1; }
-	float chanceToStay() const { return 0.0; }
+	virtual bool defenderFlee(Animal* defender) { return false; }
+	virtual bool defenderDeflected(Animal* defender) { return false; }
+	virtual bool goodSmell(Animal* defender) const { return false; }
+	virtual int howManyMoves() const { return 1; }
+	virtual float chanceToStay() const { return 0.0; }
 
 public:
 	Animal(World& w,Logger& l, const int s, const int i,const string species, const pair<int, int> pos)

@@ -26,15 +26,6 @@ pair<int, int> Organism::getPosition() { return position; };
 
 void Organism::setAge(int age) { this->age = age; }
 
-bool Organism::operator<(const Organism* other) const
-{
-	if (initiative == other->getInitiative())
-	{
-		return age < other->getAge();
-	}
-	return initiative < other->getInitiative();
-}
-
 void Organism::killOrganism(Organism* victim)
 {
 	world.getOrganismAtPos(victim->getPosition()) = nullptr;

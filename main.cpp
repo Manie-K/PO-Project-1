@@ -13,7 +13,7 @@ int main()
 	textbackground(BLACK);
 	textcolor(WHITE);
 	Logger logger(1,21);
-	World w(10,10,logger);
+	World w(8,8,logger);
 
 	char input;
 	bool quit = false;
