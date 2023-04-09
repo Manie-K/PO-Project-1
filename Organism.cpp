@@ -1,8 +1,9 @@
 #include "Organism.h"
 
-Organism::Organism(World& w, const int s, const int i,
-	const pair<int, int> pos) 
-	:world(w),strenght(s),initiative(i),age(0)
+using namespace std;
+
+Organism::Organism(World& w, const int s, const int i, const string species,const pair<int, int> pos)
+	:world(w),strenght(s),initiative(i),age(0),species(species)
 {
 	try {
 		if (pos.first < 0 || pos.second < 0 || pos.first >= world.getWidth() || pos.second >= world.getHeight())
@@ -13,12 +14,15 @@ Organism::Organism(World& w, const int s, const int i,
 	}
 	position = pos;
 	w.getOrganisms().push_back(this);
+	w.getOrganismAtPos(pos) = this;
 };
 Organism::~Organism() {};
 
 int Organism::getStrenght() const { return strenght; };
 int Organism::getInitiative() const { return initiative; };
 int Organism::getAge() const { return age; };
+void Organism::setAge(int age) { this->age = age; }
+string Organism::getSpecies() const { return species; }
 pair<int, int> Organism::getPosition() { return position; };
 
 bool Organism::operator<(const Organism* other) const
@@ -30,4 +34,10 @@ bool Organism::operator<(const Organism* other) const
 	return initiative < other->getInitiative();
 }
 
-
+void Organism::killOrganism(Organism* victim)
+{
+	world.getOrganismAtPos(victim->getPosition()) = nullptr;
+	auto iterator = find(world.getOrganisms().begin(), world.getOrganisms().end(), victim);
+	if (iterator != world.getOrganisms().end())
+		world.getOrganisms().erase(iterator);
+}

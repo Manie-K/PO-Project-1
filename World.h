@@ -13,8 +13,8 @@ private:
 	vector<Organism*> organisms;
 	Organism*** map;
 private:
-	void updateMap(const pair<int,int> pos, Organism& org);
 	void drawBorder();
+	void customInitialMapLoad();
 public:
 	World(int w = 0, int h = 0);
 	~World();

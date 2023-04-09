@@ -3,7 +3,7 @@
 #include "World.h"
 #include "Organism.h"
 #include "Configuration.h"
-#include "Animals.h"
+#include "AnimalsIncludeList.h"
 
 using namespace std;
 
@@ -12,10 +12,7 @@ int main()
 	_setcursortype(_NOCURSOR);
 	textbackground(BLACK);
 	textcolor(WHITE);
-	World w(5,5);
-	Wolf *wolf = new Wolf(w, make_pair<int,int>(0,0));
-
-	w.getOrganismAtPos(wolf->getPosition()) = wolf;
+	World w(20,20);
 
 	char input;
 	bool quit = false;

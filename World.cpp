@@ -1,11 +1,23 @@
 #include "World.h"
 #include "Organism.h"
+#include "AnimalsIncludeList.h"
 #include "conio2.h"
 #include <iostream>
 
+//EDIT THIS => INITIAL MAP CONFIGURATION
+void World::customInitialMapLoad()
+{
+	Wolf* w1 = new Wolf(*this, { 2, 2 });
+	Wolf* w2 = new Wolf(*this, {1, 1});
+	Wolf* w3 = new Wolf(*this, { 0, 0 });
+	Wolf* w4 = new Wolf(*this, { 4, 3 });
+}
+//======================================
 
 World::World(int w, int h):width(w),height(h)
 {
+	srand(time(NULL)); //initilize randomness
+
 	map = new Organism** [height];
 	for (int y = 0; y < height; y++)
 	{
@@ -15,6 +27,7 @@ World::World(int w, int h):width(w),height(h)
 			map[y][x] = nullptr;
 		}
 	}
+	customInitialMapLoad();
 }
 
 World::~World()
@@ -65,15 +78,12 @@ void World::drawWorld()
 void World::simulateTurn()
 {
 	std::sort(organisms.begin(), organisms.end());
-	for (auto& organism : organisms)
+	int fixedSize = organisms.size(); //so the newly added (birthed) organisms don't move this turn
+	for (int i = 0; i < fixedSize; i++)
 	{
-		organism->action();
+		organisms[i]->setAge(organisms[i]->getAge() + 1);
+		organisms[i]->action();
 	}
-}
-
-void World::updateMap(const pair<int,int> pos, Organism& org)
-{
-	map[pos.second][pos.first] = &org;
 }
 
 void World::drawBorder()
