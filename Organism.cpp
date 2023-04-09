@@ -21,9 +21,10 @@ Organism::~Organism() {};
 int Organism::getStrenght() const { return strenght; };
 int Organism::getInitiative() const { return initiative; };
 int Organism::getAge() const { return age; };
-void Organism::setAge(int age) { this->age = age; }
 string Organism::getSpecies() const { return species; }
 pair<int, int> Organism::getPosition() { return position; };
+
+void Organism::setAge(int age) { this->age = age; }
 
 bool Organism::operator<(const Organism* other) const
 {
@@ -37,7 +38,5 @@ bool Organism::operator<(const Organism* other) const
 void Organism::killOrganism(Organism* victim)
 {
 	world.getOrganismAtPos(victim->getPosition()) = nullptr;
-	auto iterator = find(world.getOrganisms().begin(), world.getOrganisms().end(), victim);
-	if (iterator != world.getOrganisms().end())
-		world.getOrganisms().erase(iterator);
+	replace(world.getOrganisms().begin(), world.getOrganisms().end(), victim, (Organism*)nullptr);
 }

@@ -12,7 +12,7 @@ int main()
 	_setcursortype(_NOCURSOR);
 	textbackground(BLACK);
 	textcolor(WHITE);
-	World w(20,20);
+	World w(3,3);
 
 	char input;
 	bool quit = false;

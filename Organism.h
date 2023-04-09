@@ -18,15 +18,16 @@ protected:
 	pair<int, int> position;
 	World& world;
 public:
-	Organism(World& w,const int s=0, const int i=0,const string species="",
-		const pair<int, int> pos=make_pair<int,int>(0,0));
+	Organism(World& w, const int s = 0, const int i = 0, const string species = "",
+		const pair<int, int> pos = make_pair<int, int>(0, 0));
 	int getStrenght() const;
 	int getInitiative() const;
 	int getAge() const;
-	void setAge(int age);
 	string getSpecies() const;
 	pair<int, int> getPosition();
 	
+	void setAge(int age);
+
 	virtual ~Organism()= 0;
 
 	virtual void action() = 0;

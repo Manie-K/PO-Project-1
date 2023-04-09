@@ -10,7 +10,7 @@ void World::customInitialMapLoad()
 	Wolf* w1 = new Wolf(*this, { 2, 2 });
 	Wolf* w2 = new Wolf(*this, {1, 1});
 	Sheep* s1 = new Sheep(*this, { 0, 0 });
-	Sheep* s2 = new Sheep(*this, { 4, 3 });
+	Sheep* s2 = new Sheep(*this, { 2, 1 });
 }
 //======================================
 
@@ -78,12 +78,18 @@ void World::drawWorld()
 void World::simulateTurn()
 {
 	std::sort(organisms.begin(), organisms.end());
-	int fixedSize = organisms.size(); //so the newly added (birthed) organisms don't move this turn
+	reverse(organisms.begin(), organisms.end());
+
+	int fixedSize = organisms.size();
 	for (int i = 0; i < fixedSize; i++)
 	{
-		organisms[i]->setAge(organisms[i]->getAge() + 1);
-		organisms[i]->action();
+		if (organisms[i] != nullptr)
+		{
+			organisms[i]->setAge(organisms[i]->getAge() + 1);
+			organisms[i]->action();
+		}
 	}
+	organisms.erase(remove(organisms.begin(), organisms.end(), nullptr), organisms.end());
 }
 
 void World::drawBorder()

@@ -78,7 +78,6 @@ protected:
 			return;
 		}
 		breed(defender);
-		gotoxy(50, 50);
 	};
 
 	void breed(Organism* partner) const
