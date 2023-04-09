@@ -38,5 +38,5 @@ bool Organism::operator<(const Organism* other) const
 void Organism::killOrganism(Organism* victim)
 {
 	world.getOrganismAtPos(victim->getPosition()) = nullptr;
-	replace(world.getOrganisms().begin(), world.getOrganisms().end(), victim, (Organism*)nullptr);
+	replace(world.getOrganisms().begin(), world.getOrganisms().end(), victim, static_cast<Organism*>(nullptr));
 }

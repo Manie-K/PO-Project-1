@@ -6,58 +6,74 @@ class Animal : public Organism
 protected:
 	void action() override 
 	{
-		bool foundGoodTile = false;
-		
-		while(!foundGoodTile)
-		{
-			int random = rand() % 4;
-			if (random == 0&& position.second > 0) //up
+		const int dirs = 4;
+		int moves = howManyMoves();
+		float chanceToNotMove = chanceToStay();
+		float stay = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+		if (stay < chanceToNotMove)
+			return;
+		for (int m = 0; m < moves; m++) {
+			bool foundGoodTile = false;
+			int badTiles = 0;
+			while (!foundGoodTile && badTiles < dirs)
 			{
-				if (world.getOrganismAtPos({ position.first,position.second - 1 }) == nullptr) //empty
+				int random = rand() % dirs;
+				if (random == 0 && position.second > 0) //up
 				{
-					world.getOrganismAtPos(position) = nullptr;
-					position.second--;
-					world.getOrganismAtPos(position) = this;
+					if (world.getOrganismAtPos({ position.first,position.second - 1 }) == nullptr)
+					{
+						world.getOrganismAtPos(position) = nullptr;
+						position.second--;
+						world.getOrganismAtPos(position) = this;
+					}
+					else if (!goodSmell(dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first,position.second - 1 })))) {
+						collision(world.getOrganismAtPos({ position.first,position.second - 1 }));
+						foundGoodTile = true;
+					}
+					else badTiles++;
 				}
-				else //not empty
-					collision(world.getOrganismAtPos({ position.first,position.second -1}));
-				foundGoodTile = true;
-			}
-			else if (random == 1 && position.second < world.getHeight() - 1)//bottom
-			{
-				if (world.getOrganismAtPos({position.first,position.second+1}) == nullptr)
+				else if (random == 1 && position.second < world.getHeight() - 1)//bottom
 				{
-					world.getOrganismAtPos(position) = nullptr;
-					position.second++;
-					world.getOrganismAtPos(position) = this;
+					if (world.getOrganismAtPos({ position.first,position.second + 1 }) == nullptr)
+					{
+						world.getOrganismAtPos(position) = nullptr;
+						position.second++;
+						world.getOrganismAtPos(position) = this;
+					}
+					else if (!goodSmell(dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first,position.second + 1 })))) {
+						collision(world.getOrganismAtPos({ position.first,position.second + 1 }));
+						foundGoodTile = true;
+					}
+					else badTiles++;
 				}
-				else 
-					collision(world.getOrganismAtPos({ position.first,position.second +1}));
-				foundGoodTile = true;
-			}
-			else if (random == 2&& position.first < world.getWidth() - 1)//right
-			{
-				if (world.getOrganismAtPos({ position.first+1,position.second}) == nullptr)
+				else if (random == 2 && position.first < world.getWidth() - 1)//right
 				{
-					world.getOrganismAtPos(position) = nullptr;
-					position.first++;
-					world.getOrganismAtPos(position) = this;
+					if (world.getOrganismAtPos({ position.first + 1,position.second }) == nullptr)
+					{
+						world.getOrganismAtPos(position) = nullptr;
+						position.first++;
+						world.getOrganismAtPos(position) = this;
+					}
+					else if (!goodSmell(dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first + 1,position.second })))){
+						collision(world.getOrganismAtPos({ position.first + 1,position.second }));
+						foundGoodTile = true;
+					}
+					else badTiles++;
 				}
-				else
-					collision(world.getOrganismAtPos({ position.first + 1,position.second}));
-				foundGoodTile = true;
-			}
-			else if (random == 3&& position.first > 0)//left
-			{
-				if (world.getOrganismAtPos({ position.first-1,position.second}) == nullptr)
+				else if (random == 3 && position.first > 0)//left
 				{
-					world.getOrganismAtPos(position) = nullptr;
-					position.first--;
-					world.getOrganismAtPos(position) = this;
+					if (world.getOrganismAtPos({ position.first - 1,position.second }) == nullptr)
+					{
+						world.getOrganismAtPos(position) = nullptr;
+						position.first--;
+						world.getOrganismAtPos(position) = this;
+					}
+					else if (!goodSmell(dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first - 1,position.second })))) {
+						collision(world.getOrganismAtPos({ position.first - 1,position.second }));
+						foundGoodTile = true;
+					}
+					else badTiles++;
 				}
-				else
-					collision(world.getOrganismAtPos({ position.first-1,position.second }));
-				foundGoodTile = true;
 			}
 		}
 	};
@@ -66,23 +82,36 @@ protected:
 	{
 		string mess = "";
 		//todo: if plant then call collision method from plant
-		if (species != defender->getSpecies()) {
-			if (defender->getStrenght() <= strenght)
-			{
-				world.getOrganismAtPos(position) = nullptr;
-				position = defender->getPosition();
-				killOrganism(defender);
-				mess = defender->getSpecies() + " has been killed by " + species;
-				logger.addLog({ mess,KILL });
-				world.getOrganismAtPos(position) = this;
-				return;
-			}
-			killOrganism(this);
-			mess = species + " has been killed by " + defender->getSpecies();
+
+		//its animal
+		if (species == defender->getSpecies())
+		{
+			breed(defender);
+			return;
+		}
+		if (defenderFlee(dynamic_cast<Animal*>(defender))) {
+			return;
+		}
+		if (defenderDeflected(dynamic_cast<Animal*>(defender))){
+			return;
+		}
+
+		if (defender->getStrenght() <= strenght)
+		{
+			world.getOrganismAtPos(position) = nullptr;
+			position = defender->getPosition();
+			killOrganism(defender);
+			world.getOrganismAtPos(position) = this;
+
+			mess = defender->getSpecies() + " has been killed by " + species;
 			logger.addLog({ mess,KILL });
 			return;
 		}
-		breed(defender);
+		killOrganism(this);
+
+		mess = species + " has been killed by " + defender->getSpecies();
+		logger.addLog({ mess,KILL });
+		return;
 	};
 
 	void breed(Organism* partner) const
@@ -122,6 +151,12 @@ protected:
 			logger.addLog({ mess,BIRTH });
 		}
 	}
+
+	bool defenderFlee(Animal* defender) { return false; }
+	bool defenderDeflected(Animal* defender) { return false; }
+	bool goodSmell(Animal* defender)const { return false; }
+	int howManyMoves() const { return 1; }
+	float chanceToStay() const { return 0.0; }
 
 public:
 	Animal(World& w,Logger& l, const int s, const int i,const string species, const pair<int, int> pos)
