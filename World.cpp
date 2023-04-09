@@ -9,8 +9,8 @@ void World::customInitialMapLoad()
 {
 	Wolf* w1 = new Wolf(*this, { 2, 2 });
 	Wolf* w2 = new Wolf(*this, {1, 1});
-	Wolf* w3 = new Wolf(*this, { 0, 0 });
-	Wolf* w4 = new Wolf(*this, { 4, 3 });
+	Sheep* s1 = new Sheep(*this, { 0, 0 });
+	Sheep* s2 = new Sheep(*this, { 4, 3 });
 }
 //======================================
 

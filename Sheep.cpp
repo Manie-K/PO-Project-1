@@ -3,18 +3,19 @@
 
 using namespace std;
 
-class Wolf : public Animal {
+class Sheep : public Animal
+{
 public:
-	Wolf(World& w, pair<int,int> pos) :Animal(w, 9, 5, "Wolf", pos) {};
-	
+	Sheep(World& w, pair<int, int> pos) :Animal(w, 4, 4, "Sheep", pos) {};
+
 	void draw() override {
-		textcolor(RED);
-		cout << WOLF_CHAR;
+		textcolor(GREEN);
+		cout << SHEEP_CHAR;
 		textcolor(WHITE);
 	}
 
 	Organism* giveBirth(World& w, pair<int, int> pos)const override
 	{
-		return new Wolf(w, pos);
+		return new Sheep(w, pos);
 	}
 };
