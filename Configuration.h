@@ -14,6 +14,7 @@
 #define DIRECTION_COUNT 4
 #define ABILITY_TIME 5
 #define ABILITY_COOLDOWN 10
+#define PLANT_SEED_CHANCE 0.2f
 
 #define MAP_W 16
 #define MAP_H 8
