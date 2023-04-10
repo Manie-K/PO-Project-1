@@ -15,7 +15,6 @@ private:
 	Organism*** map;
 private:
 	void drawBorder();
-	void customInitialMapLoad(Logger& logger);
 	static bool compareOrganismPointer(const Organism* o1, const Organism* o2);
 public:
 	World(int w, int h, Logger& logger);

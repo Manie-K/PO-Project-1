@@ -6,21 +6,23 @@ class Animal : public Organism
 protected:
 	void action() override 
 	{
-		const int dirs = 4;
 		int moves = howManyMoves();
 		float chanceToNotMove = chanceToStay();
 		float stay = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
+		bool dead = false;
 		if (stay < chanceToNotMove)
 			return;
 		for (int m = 0; m < moves; m++) {
+			if (dead)
+				return;
 			bool foundGoodTile = false;
-			bool badTiles[dirs] = { false,false,false,false };
+			bool badTiles[DIRECTION_COUNT] = { false,false,false,false };
 			while (!foundGoodTile)
 			{
 				if (badTiles[0] && badTiles[1] && badTiles[2] && badTiles[3])
 					return;
-				int random = rand() % dirs;
-				if (random == 0 && position.second > 0) //up
+				int direction = getDirection();
+				if (direction == 0 && position.second > 0) //up
 				{
 					if (world.getOrganismAtPos({ position.first,position.second - 1 }) == nullptr)
 					{
@@ -30,12 +32,12 @@ protected:
 						foundGoodTile = true;
 					}
 					else if (!goodSmell(dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first,position.second - 1 })))) {
-						collision(world.getOrganismAtPos({ position.first,position.second - 1 }));
+						dead = collision(world.getOrganismAtPos({ position.first,position.second - 1 }));
 						foundGoodTile = true;
 					}
 					else badTiles[0]=true;
 				}
-				else if (random == 1 && position.second < world.getHeight() - 1)//bottom
+				else if (direction == 1 && position.second < world.getHeight() - 1)//bottom
 				{
 					if (world.getOrganismAtPos({ position.first,position.second + 1 }) == nullptr)
 					{
@@ -45,12 +47,12 @@ protected:
 						foundGoodTile = true;
 					}
 					else if (!goodSmell(dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first,position.second + 1 })))) {
-						collision(world.getOrganismAtPos({ position.first,position.second + 1 }));
+						dead = collision(world.getOrganismAtPos({ position.first,position.second + 1 }));
 						foundGoodTile = true;
 					}
 					else badTiles[1] = true;
 				}
-				else if (random == 2 && position.first < world.getWidth() - 1)//right
+				else if (direction == 2 && position.first < world.getWidth() - 1)//right
 				{
 					if (world.getOrganismAtPos({ position.first + 1,position.second }) == nullptr)
 					{
@@ -60,12 +62,12 @@ protected:
 						foundGoodTile = true;
 					}
 					else if (!goodSmell(dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first + 1,position.second })))){
-						collision(world.getOrganismAtPos({ position.first + 1,position.second }));
+						dead = collision(world.getOrganismAtPos({ position.first + 1,position.second }));
 						foundGoodTile = true;
 					}
 					else badTiles[2] = true;
 				}
-				else if (random == 3 && position.first > 0)//left
+				else if (direction == 3 && position.first > 0)//left
 				{
 					if (world.getOrganismAtPos({ position.first - 1,position.second }) == nullptr)
 					{
@@ -75,7 +77,7 @@ protected:
 						foundGoodTile = true;
 					}
 					else if (!goodSmell(dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first - 1,position.second })))) {
-						collision(world.getOrganismAtPos({ position.first - 1,position.second }));
+						dead = collision(world.getOrganismAtPos({ position.first - 1,position.second }));
 						foundGoodTile = true;
 					}
 					else badTiles[3] = true;
@@ -84,7 +86,7 @@ protected:
 		}
 	};
 
-	void collision(Organism* defender) override 
+	bool collision(Organism* defender) override //returns true when the attacker (this) dies
 	{
 		string mess = "";
 		//todo: if plant then call collision method from plant
@@ -93,13 +95,17 @@ protected:
 		if (species == defender->getSpecies())
 		{
 			breed(defender);
-			return;
+			return false;
 		}
-		if (defenderFlee(dynamic_cast<Animal*>(defender))) {
-			return;
+		if (dynamic_cast<Animal*>(defender)->defenderFlee(dynamic_cast<Animal*>(this))) {
+			mess = defender->getSpecies() + " has fleed from " + species;
+			logger.addLog({ mess, INFO });
+			return false;
 		}
-		if (defenderDeflected(dynamic_cast<Animal*>(defender))){
-			return;
+		if (dynamic_cast<Animal*>(defender)->defenderDeflected(dynamic_cast<Animal*>(this))){
+			mess = defender->getSpecies() + " has succesfully deflected an attack of " + species;
+			logger.addLog({ mess, INFO });
+			return false;
 		}
 
 		if (defender->getStrenght() <= strenght)
@@ -109,15 +115,14 @@ protected:
 			killOrganism(defender);
 			world.getOrganismAtPos(position) = this;
 
-			mess = defender->getSpecies() + " has been killed by " + species;
+			mess = species + " has killed " + defender->getSpecies() + " in attack";
 			logger.addLog({ mess,KILL });
-			return;
+			return false;
 		}
 		killOrganism(this);
-
-		mess = species + " has been killed by " + defender->getSpecies();
+		mess = species + " has been killed by " + defender->getSpecies() + " in attack";
 		logger.addLog({ mess,KILL });
-		return;
+		return true;
 	};
 
 	void breed(Organism* partner) const
@@ -129,25 +134,25 @@ protected:
 			{
 				giveBirth(world, logger,{ pos.first, pos.second - 1 });
 				succes = true;
-				break;
+				return;
 			}
 			if (pos.second < world.getHeight() - 1 && world.getOrganismAtPos({ pos.first, pos.second + 1 }) == nullptr)
 			{
 				giveBirth(world, logger, { pos.first, pos.second + 1 });
 				succes = true;
-				break;
+				return;
 			}
 			if (pos.first > 0 && world.getOrganismAtPos({ pos.first - 1, pos.second }) == nullptr)
 			{
 				giveBirth(world, logger, { pos.first - 1, pos.second });
 				succes = true;
-				break;
+				return;
 			}
 			if (pos.first < world.getWidth() - 1 && world.getOrganismAtPos({ pos.first + 1, pos.second }) == nullptr)
 			{
 				giveBirth(world, logger, { pos.first + 1, pos.second });
 				succes = true;
-				break;
+				return;
 			}
 			pos = position; //second loop iteration will look at tiles near this organism
 		}
@@ -158,11 +163,12 @@ protected:
 		}
 	}
 
-	virtual bool defenderFlee(Animal* defender) { return false; }
-	virtual bool defenderDeflected(Animal* defender) { return false; }
+	virtual bool defenderFlee(Animal* attacker) { return false; }
+	virtual bool defenderDeflected(Animal* attacker) { return false; }
 	virtual bool goodSmell(Animal* defender) const { return false; }
 	virtual int howManyMoves() const { return 1; }
 	virtual float chanceToStay() const { return 0.0; }
+	virtual int getDirection() const { return rand() % DIRECTION_COUNT; }
 
 public:
 	Animal(World& w,Logger& l, const int s, const int i,const string species, const pair<int, int> pos)

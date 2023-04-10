@@ -21,6 +21,9 @@ void Logger::display()
 		case EMPTY:
 			textcolor(WHITE);
 			break;
+		case INFO:
+			textcolor(LIGHTBLUE);
+			break;
 		case KILL:
 			textcolor(RED);
 			break;

@@ -29,6 +29,7 @@ public:
 	pair<int, int> getPosition();
 	
 	void setAge(int age);
+	void setPosition(pair<int, int> pos);
 
 	virtual ~Organism()= 0;
 
@@ -36,7 +37,7 @@ public:
 	virtual void draw() = 0;
 
 protected:
-	virtual void collision(Organism* defender) = 0;
+	virtual bool collision(Organism* defender) = 0;
 	virtual Organism* giveBirth(World& w, Logger& l, pair<int, int> pos) const = 0;
 	void killOrganism(Organism* victim);
 };

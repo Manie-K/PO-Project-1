@@ -1,9 +1,3 @@
-//PROJECT DONE
-/*
- * template for the course Podstawy Programowania
- * only to be used for the project in this course
- * author: K.M. Ocetkiewicz
- */
 #ifndef CONIO2_H
 #define CONIO2_H
 
@@ -11,7 +5,7 @@
 #define BLUE		1
 #define GREEN		2
 #define CYAN		3
-#define RED		4
+#define RED			4
 #define MAGENTA		5
 #define BROWN		6
 #define LIGHTGRAY	7

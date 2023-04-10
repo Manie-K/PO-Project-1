@@ -8,6 +8,7 @@ using namespace std;
 
 typedef enum {
 	EMPTY,
+	INFO,
 	KILL,
 	BIRTH
 }Type;

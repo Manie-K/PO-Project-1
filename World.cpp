@@ -4,24 +4,8 @@
 #include "conio2.h"
 #include <iostream>
 
-//EDIT THIS => INITIAL MAP CONFIGURATION
-void World::customInitialMapLoad(Logger& logger)
-{
-	Sheep* s1 = new Sheep(*this, logger, { 1, 0 });
-	Wolf* w1 = new Wolf(*this,logger, { 0, 2 });
-	Wolf* w2 = new Wolf(*this, logger, {6, 6});
-	Fox* f1 = new Fox(*this, logger, { 3,3 });
-	Fox* f2 = new Fox(*this, logger, { 2,4 });
-	Sheep* s2 = new Sheep(*this, logger, { 6, 3 });
-	Sheep* s3 = new Sheep(*this, logger, { 2, 7 });
-	Sheep* s4 = new Sheep(*this, logger, { 2, 2 });
-}
-//======================================
-
 World::World(int w, int h, Logger& logger):width(w),height(h)
 {
-	srand(time(NULL)); //initilize randomness
-
 	map = new Organism** [height];
 	for (int y = 0; y < height; y++)
 	{
@@ -31,7 +15,6 @@ World::World(int w, int h, Logger& logger):width(w),height(h)
 			map[y][x] = nullptr;
 		}
 	}
-	customInitialMapLoad(logger);
 }
 
 World::~World()
@@ -40,13 +23,13 @@ World::~World()
 	{
 		for (int x = 0; x < width; x++)
 		{
-			delete map[y][x];
+			//delete map[y][x];
 			map[y][x] = nullptr;
 		}
-		delete[] map[y];
+		//delete[] map[y];
 		map[y] = nullptr;
 	}
-	delete[] map;
+	//delete[] map;
 	map = nullptr;
 }
 
