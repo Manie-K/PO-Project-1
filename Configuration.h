@@ -2,6 +2,7 @@
 #include "conio2.h"
 
 #define END_SIMULATION_KEY 'x'
+#define ABILITY_KEY 'm'
 #define UP_ARROW	'w'
 #define DOWN_ARROW  's'
 #define RIGHT_ARROW 'd'
@@ -11,6 +12,8 @@
 #define LOG_POS_OFFSET 4
 
 #define DIRECTION_COUNT 4
+#define ABILITY_TIME 5
+#define ABILITY_COOLDOWN 10
 
 #define MAP_W 16
 #define MAP_H 8

@@ -4,7 +4,7 @@ InputManager::InputManager()
 {
 	quit = false;
 	arrowKey = false;
-	inputChar = 0;
+	inputChar = abilityLeft = abilityCooldown= 0;
 }
 
 InputManager::~InputManager(){}
@@ -21,8 +21,24 @@ void InputManager::input()
 	{
 		quit = true;
 	}
+	if (inputChar == ABILITY_KEY)
+	{
+		if (abilityCooldown == 0) {
+			abilityCooldown = ABILITY_COOLDOWN;
+			abilityLeft = ABILITY_TIME;
+		}
+	}
 }
 
+int InputManager::getAbility() const { return abilityLeft; }
 int InputManager::getInput() const{return inputChar;}
 bool InputManager::getQuit() const { return quit; }
 bool InputManager::getArrowKey() const { return arrowKey; }
+
+void InputManager::nextTurn()
+{
+	if (abilityLeft > 0)
+		abilityLeft--;
+	if (abilityCooldown > 0)
+		abilityCooldown--;
+}

@@ -26,7 +26,7 @@ public:
 	bool defenderFlee(Animal* attacker) override
 	{
 		int flee = rand() % 2;
-		if (flee > 1)
+		if (flee == 1)
 		{
 			pair<int, int> tempPos = position;
 			if (position.second > 0 &&

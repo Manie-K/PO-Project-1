@@ -32,6 +32,7 @@ void Simulator::run()
 			world->simulateTurn();
 			world->drawWorld();
 			logger->display();
+			manager->nextTurn();
 		}
 	}
 }

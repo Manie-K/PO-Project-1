@@ -16,19 +16,53 @@ public:
 		textcolor(WHITE);
 	}
 
-	int getDirection() const override //ERROR NEAR BORDERS
+	int howManyMoves() const override
 	{
+		int turnsLeft = inputManager.getAbility();
+		if(turnsLeft == 0)
+			return 1;
+		if (turnsLeft > 2)
+			return 2;
+		int random = rand() % 2;
+		return random == 1 ? 2 : 1;
+	}
+
+	int getDirection() const override //Won't move into border
+	{
+		int ret;
 		switch (inputManager.getInput())
 		{
 		case UP_ARROW:
-			return 0;
+			if (position.second <= 0)
+				ret = -1;
+			else
+				ret = 0;
+			break;
 		case DOWN_ARROW:
-			return 1;
+			if (position.second >= world.getHeight() - 1)
+				ret = -1;
+			else
+				ret = 1;
+			break;
 		case RIGHT_ARROW:
-			return 2;
+			if (position.first >= world.getWidth() - 1)
+				ret = -1;
+			else
+				ret = 2;
+			break;
 		case LEFT_ARROW:
-			return 3;
+			if (position.first <= 0)
+				ret = -1;
+			else
+				ret = 3;
+			break;
+		default:
+			ret = -1;
+			break;
 		}
+		if (ret == -1)
+			logger.addLog({"Human tried to walk into border!", INFO});
+		return ret;
 	}
 
 	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos) const override

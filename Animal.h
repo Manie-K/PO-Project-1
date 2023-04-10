@@ -22,6 +22,8 @@ protected:
 				if (badTiles[0] && badTiles[1] && badTiles[2] && badTiles[3])
 					return;
 				int direction = getDirection();
+				if(direction == -1)
+					return;
 				if (direction == 0 && position.second > 0) //up
 				{
 					if (world.getOrganismAtPos({ position.first,position.second - 1 }) == nullptr)

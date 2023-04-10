@@ -7,6 +7,8 @@ using namespace std;
 class InputManager {
 private:
 	int inputChar;
+	int abilityCooldown;
+	int abilityLeft;
 	bool arrowKey;
 	bool quit;
 public:
@@ -14,7 +16,10 @@ public:
 	~InputManager();
 	void input();
 
+	int getAbility() const;
 	int getInput() const;
 	bool getQuit() const;
 	bool getArrowKey() const;
+
+	void nextTurn();
 };
