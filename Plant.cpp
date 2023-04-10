@@ -10,46 +10,50 @@ void Plant::action()
 		float chance = static_cast<float>(rand()) / static_cast<float>(RAND_MAX);
 		if (chance <= PLANT_SEED_CHANCE)
 		{
-			int dir = rand() % DIRECTION_COUNT;
 			int noGoodTile = 0;
-			int x = (1 >> DIRECTION_COUNT) - 1;
+			const int x = (1 << DIRECTION_COUNT) - 1;
 			while (noGoodTile < x)
 			{
+				int dir = rand() % DIRECTION_COUNT;
 				if (dir == 0) //TOP
 				{
 					if (position.second > 0 && world.getOrganismAtPos({ position.first,position.second - 1 }) == nullptr)
 					{
 						sow({ position.first,position.second - 1 });
+						noGoodTile = x;
 					}
 					else
-						noGoodTile = noGoodTile | (1 >> dir);
+						noGoodTile = noGoodTile | (1 <<dir);
 				}
 				else if (dir == 1) //BOTTOM
 				{
 					if (position.second < world.getHeight() - 1 && world.getOrganismAtPos({ position.first,position.second + 1 }) == nullptr)
 					{
 						sow({ position.first,position.second + 1 });
+						noGoodTile = x;
 					}
 					else
-						noGoodTile = noGoodTile | (1 >> dir);
+						noGoodTile = noGoodTile | (1 << dir);
 				}
 				else if (dir == 2) //RIGHT
 				{
 					if (position.first > world.getWidth() - 1 && world.getOrganismAtPos({ position.first + 1,position.second }) == nullptr)
 					{
 						sow({ position.first + 1,position.second });
+						noGoodTile = x;
 					}
 					else
-						noGoodTile = noGoodTile | (1 >> dir);
+						noGoodTile = noGoodTile | (1 << dir);
 				}
 				else if (dir == 3) //LEFT
 				{
 					if (position.first > 0 && world.getOrganismAtPos({ position.first - 1,position.second }) == nullptr)
 					{
 						sow({ position.first - 1,position.second });
+						noGoodTile = x;
 					}
 					else
-						noGoodTile = noGoodTile | (1 >> dir);
+						noGoodTile = noGoodTile | (1 << dir);
 				}
 			}
 		}

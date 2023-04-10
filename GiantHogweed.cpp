@@ -1,4 +1,4 @@
-#include "Plant.h"
+#include "Animal.h"
 
 class GiantHogweed : public Plant {
 public:
@@ -18,13 +18,17 @@ public:
 
 	void action() override
 	{
-		if (position.second > 0 && world.getOrganismAtPos({ position.first,position.second - 1 })!=nullptr)
+		if (position.second > 0 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first,position.second - 1 }))
+			!=nullptr)
 			killOrganism(world.getOrganismAtPos({ position.first,position.second - 1 }));
-		if (position.second < world.getHeight()-1 && world.getOrganismAtPos({ position.first,position.second + 1 }) != nullptr)
+		if (position.second < world.getHeight()-1 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first,position.second + 1 }))
+			!= nullptr)
 			killOrganism(world.getOrganismAtPos({ position.first,position.second + 1 }));
-		if (position.first < world.getWidth()-1 && world.getOrganismAtPos({ position.first+1,position.second }) != nullptr)
+		if (position.first < world.getWidth()-1 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first+1,position.second })) 
+			!= nullptr)
 			killOrganism(world.getOrganismAtPos({ position.first+1,position.second}));
-		if (position.first > 0 && world.getOrganismAtPos({ position.first-1,position.second}) != nullptr)
+		if (position.first > 0 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first-1,position.second})) 
+			!= nullptr)
 			killOrganism(world.getOrganismAtPos({ position.first-1,position.second}));
 	}
 	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos) const override
