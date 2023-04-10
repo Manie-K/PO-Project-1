@@ -8,7 +8,7 @@ class Turtle : public Animal
 public:
 	Turtle(World& w, Logger& l, pair<int, int> pos) :Animal(w, l, 2, 1, "Turtle", pos) {};
 
-	void draw() override {
+	void draw() const override {
 		textcolor(GREEN);
 		cout << TURTLE_CHAR;
 		textcolor(WHITE);

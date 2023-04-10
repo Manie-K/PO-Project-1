@@ -39,10 +39,11 @@ void Simulator::run()
 
 void Simulator::setUpWorld()
 {
-	Human* human = new Human(*world, *logger,*manager, { 5, 5});
-	Sheep* s1 = new Sheep(*world, *logger, { 1, 0 });
-	Fox* f1 = new Fox(*world, *logger, { 1, 1 });
-	Organism* w1 = new Wolf(*world, *logger, { 0,1 });
-	Animal* t1 = new Turtle(*world, *logger, { 0, 0 });
-	Antelope* a1 = new Antelope(*world, *logger, { 2, 0 });
+	Human* human = new Human(*world, *logger,*manager, { 1, 5});
+	Fox* f1 = new Fox(*world, *logger, { 6, 7 });
+	Dandelion* d1 = new Dandelion(*world, *logger, { 15, 7 });
+	Grass* g1 = new Grass(*world, *logger, { 3, 5 });
+	Guarana* gu1 = new Guarana(*world, *logger, {6, 2 });
+	WolfBerries* w1 = new WolfBerries(*world, *logger, { 7, 0 });
+	GiantHogweed* h1 = new GiantHogweed(*world, *logger, { 5, 1 });
 }

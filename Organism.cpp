@@ -25,6 +25,7 @@ string Organism::getSpecies() const { return species; }
 pair<int, int> Organism::getPosition() { return position; };
 
 void Organism::setAge(int age) { this->age = age; }
+void Organism::setStrenght(int strenght) { this->strenght = strenght; }
 void Organism::setPosition(pair<int, int> pos) { this->position = pos; }
 
 void Organism::killOrganism(Organism* victim)

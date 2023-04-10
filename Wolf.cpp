@@ -7,7 +7,7 @@ class Wolf : public Animal {
 public:
 	Wolf(World& w, Logger& l, pair<int,int> pos) :Animal(w,l, 9, 5, "Wolf", pos) {};
 	
-	void draw() override {
+	void draw() const override {
 		textcolor(RED);
 		cout << WOLF_CHAR;
 		textcolor(WHITE);

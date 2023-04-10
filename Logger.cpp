@@ -28,7 +28,16 @@ void Logger::display()
 			textcolor(RED);
 			break;
 		case BIRTH:
+			textcolor(LIGHTGREEN);
+			break;
+		case SOW:
 			textcolor(GREEN);
+			break;
+		case EAT:
+			textcolor(MAGENTA);
+			break;
+		case POISON:
+			textcolor(YELLOW);
 			break;
 		default:
 			textcolor(BLACK);

@@ -10,7 +10,10 @@ typedef enum {
 	EMPTY,
 	INFO,
 	KILL,
-	BIRTH
+	BIRTH,
+	SOW,
+	EAT,
+	POISON
 }Type;
 
 typedef struct {

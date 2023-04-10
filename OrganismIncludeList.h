@@ -5,3 +5,8 @@
 #include "Fox.cpp"
 #include "Turtle.cpp"
 #include "Antelope.cpp"
+#include "Grass.cpp"
+#include "Dandelion.cpp"
+#include "Guarana.cpp"
+#include "WolfBerries.cpp"
+#include "GiantHogweed.cpp"

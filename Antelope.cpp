@@ -7,7 +7,7 @@ class Antelope : public Animal {
 public:
 	Antelope(World& w, Logger& l, pair<int, int> pos) :Animal(w, l, 4, 4, "Antelope", pos) {};
 
-	void draw() override {
+	void draw()const override {
 		textcolor(LIGHTRED);
 		cout << ANTELOPE_CHAR;
 		textcolor(WHITE);
