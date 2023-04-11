@@ -8,7 +8,7 @@
 #define RIGHT_ARROW 'd'
 #define LEFT_ARROW  'a'
 
-#define LOG_MAX_MESSAGES 5
+#define LOG_MAX_MESSAGES 12
 #define LOG_POS_OFFSET 4
 
 #define DIRECTION_COUNT 4

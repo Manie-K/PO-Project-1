@@ -13,23 +13,36 @@ public:
 	bool kill(Organism* attacker) override
 	{
 		killOrganism(attacker);
+		logger.addLog({ attacker->getSpecies() + " died from eating " + species, KILL });
 		return true;
 	}
 
 	void action() override
 	{
 		if (position.second > 0 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first,position.second - 1 }))
-			!=nullptr)
+			!= nullptr)
+		{
 			killOrganism(world.getOrganismAtPos({ position.first,position.second - 1 }));
-		if (position.second < world.getHeight()-1 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first,position.second + 1 }))
+			logger.addLog({ species + " killed " + world.getOrganismAtPos({ position.first,position.second - 1 })->getSpecies(),KILL });
+		}
+		if (position.second < world.getHeight() - 1 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first,position.second + 1 }))
 			!= nullptr)
+		{
 			killOrganism(world.getOrganismAtPos({ position.first,position.second + 1 }));
-		if (position.first < world.getWidth()-1 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first+1,position.second })) 
+			logger.addLog({ species + " killed " + world.getOrganismAtPos({ position.first,position.second + 1 })->getSpecies(),KILL });
+		}
+		if (position.first < world.getWidth() - 1 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first + 1,position.second }))
 			!= nullptr)
-			killOrganism(world.getOrganismAtPos({ position.first+1,position.second}));
-		if (position.first > 0 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first-1,position.second})) 
+		{
+			killOrganism(world.getOrganismAtPos({ position.first + 1,position.second }));
+			logger.addLog({ species + " killed " + world.getOrganismAtPos({ position.first+1,position.second })->getSpecies(),KILL });
+		}
+		if (position.first > 0 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first - 1,position.second }))
 			!= nullptr)
-			killOrganism(world.getOrganismAtPos({ position.first-1,position.second}));
+		{
+			killOrganism(world.getOrganismAtPos({ position.first - 1,position.second }));
+			logger.addLog({ species + " killed " + world.getOrganismAtPos({ position.first-1,position.second})->getSpecies(),KILL });
+		}
 	}
 	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos) const override
 	{

@@ -17,6 +17,7 @@ public:
 	void input();
 
 	int getAbility() const;
+	int getAbilityCooldown() const;
 	int getInput() const;
 	bool getQuit() const;
 	bool getArrowKey() const;

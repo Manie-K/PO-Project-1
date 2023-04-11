@@ -1,6 +1,6 @@
 #include "Logger.h"
 
-Logger::Logger(const int x, const int y):startX(x),startY(y),added(false)
+Logger::Logger(const int x, const int y, InputManager& in):startX(x),startY(y),added(false),input(in)
 {
 	logs.clear();
 }
@@ -9,6 +9,7 @@ Logger::~Logger(){logs.clear();}
 
 void Logger::display()
 {
+	textMenu();
 	if(!added)
 		addLog({ "                                  ",EMPTY });
 	auto it = logs.begin();
@@ -50,6 +51,27 @@ void Logger::display()
 	textcolor(WHITE);
 	textbackground(BLACK);
 	added = false;
+}
+
+void Logger::textMenu() const
+{
+	const int x = MAP_START_X + MAP_W + 3;
+	const int y = MAP_START_Y;
+
+	int i = y;
+	gotoxy(x, i++);
+	cout << "MACIEJ GÓRALCZYK 193302";
+	gotoxy(x, i++);
+	cout << "LEGENDA:";
+	gotoxy(x, i++);
+
+	gotoxy(x, i++);
+	gotoxy(x, i++);
+	gotoxy(x, i++);
+	cout << "Special ability (turns left) - " << input.getAbility();
+	gotoxy(x, i++);
+	cout << "Special ability (cooldown) - " << input.getAbilityCooldown();
+
 }
 
 void Logger::addLog(const LogString& log)

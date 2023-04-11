@@ -3,9 +3,9 @@
 Simulator::Simulator()
 {
 	srand(time(NULL));
-	logger = new Logger(1,MAP_START_Y+MAP_H+LOG_POS_OFFSET);
-	world = new World(MAP_W, MAP_H, *logger);
 	manager = new InputManager;
+	logger = new Logger(1,MAP_START_Y+MAP_H+LOG_POS_OFFSET,*manager);
+	world = new World(MAP_W, MAP_H, *logger);
 	setUpWorld();
 	_setcursortype(_NOCURSOR);
 	textbackground(BLACK);
@@ -31,8 +31,8 @@ void Simulator::run()
 		{
 			world->simulateTurn();
 			world->drawWorld();
-			logger->display();
 			manager->nextTurn();
+			logger->display();
 		}
 	}
 }

@@ -3,6 +3,7 @@
 #include <string>
 #include <iostream>
 #include "Configuration.h"
+#include "InputManager.h"
 
 using namespace std;
 
@@ -27,10 +28,12 @@ private:
 	const static int max_messages = LOG_MAX_MESSAGES;
 	const int startX, startY;
 	bool added;
+	InputManager& input;
 	deque<LogString> logs;
 public:
-	Logger(const int x, const int y);
+	Logger(const int x, const int y, InputManager& in);
 	~Logger();
 	void display();
+	void textMenu() const;
 	void addLog(const LogString& log);
 };

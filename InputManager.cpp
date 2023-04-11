@@ -31,6 +31,7 @@ void InputManager::input()
 }
 
 int InputManager::getAbility() const { return abilityLeft; }
+int InputManager::getAbilityCooldown() const { return abilityCooldown; }
 int InputManager::getInput() const{return inputChar;}
 bool InputManager::getQuit() const { return quit; }
 bool InputManager::getArrowKey() const { return arrowKey; }

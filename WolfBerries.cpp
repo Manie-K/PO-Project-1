@@ -13,6 +13,7 @@ public:
 	bool kill(Organism* attacker) override
 	{
 		killOrganism(attacker);
+		logger.addLog({ attacker->getSpecies() + " died from eating " + species, KILL });
 		return true;
 	}
 	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos) const override
