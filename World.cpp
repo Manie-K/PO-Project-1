@@ -1,7 +1,4 @@
-#include "World.h"
 #include "Organism.h"
-#include "OrganismIncludeList.h"
-#include "conio2.h"
 #include <iostream>
 
 World::World(int w, int h, Logger& logger):width(w),height(h)
@@ -49,13 +46,14 @@ Organism*** World::getMap() { return map; }
 
 void World::drawWorld()
 {
-	clrscr();
+	
+	system("cls");
 	drawBorder();
 	for (int y = 0; y < height; y++)
 	{
 		for (int x = 0; x < width; x++)
 		{
-			gotoxy(x+MAP_START_X+1, y+MAP_START_Y+1); //map start includes border, so + 1
+			custom.gotoxy(x+MAP_START_X+1, y+MAP_START_Y+1); //map start includes border, so + 1
 			if(map[y][x]!=nullptr)
 				map[y][x]->draw();
 		}
@@ -89,27 +87,27 @@ void World::simulateTurn()
 
 void World::drawBorder()
 {
-	gotoxy(MAP_START_X, MAP_START_Y);
+	custom.gotoxy(MAP_START_X, MAP_START_Y);
 	for (int x = 0; x < width + 2; x++)
 	{
 		cout <<BORDER_CHAR;
 	}
-	gotoxy(MAP_START_X, MAP_START_Y+height+1);
+	custom.gotoxy(MAP_START_X, MAP_START_Y+height+1);
 	for (int x = 0; x < width + 2; x++)
 	{
 		cout << BORDER_CHAR;
 	}
 	for (int y = 0; y < height+1; y++)
 	{
-		gotoxy(MAP_START_X, MAP_START_Y+y);
+		custom.gotoxy(MAP_START_X, MAP_START_Y+y);
 		cout << BORDER_CHAR;
 	}
 	for (int y = 0; y < height + 1; y++)
 	{
-		gotoxy(MAP_START_X+width+1, MAP_START_Y+y);
+		custom.gotoxy(MAP_START_X+width+1, MAP_START_Y+y);
 		cout << BORDER_CHAR;
 	}
-	gotoxy(1, 15);
+	custom.gotoxy(1, 15);
 }
 
 Organism*& World::getOrganismAtPos(pair<int, int> pos)

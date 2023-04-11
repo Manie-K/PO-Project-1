@@ -26,6 +26,7 @@ class Logger
 {
 private:
 	const static int max_messages = LOG_MAX_MESSAGES;
+	static textCustomizer custom;
 	const int startX, startY;
 	bool added;
 	InputManager& input;

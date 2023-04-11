@@ -6,9 +6,9 @@ public:
 	~Grass(){}
 	void draw() const override
 	{
-		textcolor(GREEN);
+		custom.textcolor(GREEN);
 		cout << GRASS_CHAR;
-		textcolor(WHITE);
+		custom.textcolor(WHITE);
 	}
 	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos) const override
 	{

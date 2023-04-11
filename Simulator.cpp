@@ -7,9 +7,6 @@ Simulator::Simulator()
 	logger = new Logger(1,MAP_START_Y+MAP_H+LOG_POS_OFFSET,*manager);
 	world = new World(MAP_W, MAP_H, *logger);
 	setUpWorld();
-	_setcursortype(_NOCURSOR);
-	textbackground(BLACK);
-	textcolor(WHITE);
 }
 Simulator::~Simulator()
 {
@@ -23,7 +20,9 @@ Simulator::~Simulator()
 
 void Simulator::run()
 {
+	custom.disableCursor();
 	world->drawWorld();
+	logger->display();
 	while (!manager->getQuit())
 	{
 		manager->input();

@@ -9,9 +9,9 @@ public:
 	Sheep(World& w, Logger& l, pair<int, int> pos) :Animal(w,l, 4, 4, "Sheep", pos) {};
 
 	void draw() const override {
-		textcolor(LIGHTGREEN);
+		custom.textcolor(LIGHTGREEN);
 		cout << SHEEP_CHAR;
-		textcolor(WHITE);
+		custom.textcolor(WHITE);
 	}
 
 	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos)const override

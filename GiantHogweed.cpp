@@ -6,9 +6,9 @@ public:
 	~GiantHogweed() {}
 	void draw() const override
 	{
-		textcolor(LIGHTRED);
+		custom.textcolor(LIGHTRED);
 		cout << GIANT_HOGWEED_CHAR;
-		textcolor(WHITE);
+		custom.textcolor(WHITE);
 	}
 	bool kill(Organism* attacker) override
 	{

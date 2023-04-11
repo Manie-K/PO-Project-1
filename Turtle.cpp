@@ -9,9 +9,9 @@ public:
 	Turtle(World& w, Logger& l, pair<int, int> pos) :Animal(w, l, 2, 1, "Turtle", pos) {};
 
 	void draw() const override {
-		textcolor(GREEN);
+		custom.textcolor(GREEN);
 		cout << TURTLE_CHAR;
-		textcolor(WHITE);
+		custom.textcolor(WHITE);
 	}
 
 	float chanceToStay() const override

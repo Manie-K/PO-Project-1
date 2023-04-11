@@ -6,9 +6,9 @@ public:
 	~Dandelion() {}
 	void draw() const override
 	{
-		textcolor(YELLOW);
+		custom.textcolor(YELLOW);
 		cout << DANDELION_CHAR;
-		textcolor(WHITE);
+		custom.textcolor(WHITE);
 	}
 	int getChances() const override
 	{

@@ -1,4 +1,5 @@
 #include "InputManager.h"
+#include <conio.h>
 
 InputManager::InputManager()
 {
@@ -12,7 +13,7 @@ InputManager::~InputManager(){}
 void InputManager::input()
 {
 	arrowKey = quit = false;
-	inputChar = getchar();
+	inputChar = _getch();
 	if (inputChar == UP_ARROW || inputChar == DOWN_ARROW || inputChar == LEFT_ARROW || inputChar == RIGHT_ARROW)
 	{
 		arrowKey = true;

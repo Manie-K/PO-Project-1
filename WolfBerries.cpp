@@ -6,9 +6,9 @@ public:
 	~WolfBerries() {}
 	void draw() const override
 	{
-		textcolor(LIGHTMAGENTA);
+		custom.textcolor(LIGHTMAGENTA);
 		cout << WOLF_BERRIES_CHAR;
-		textcolor(WHITE);
+		custom.textcolor(WHITE);
 	}
 	bool kill(Organism* attacker) override
 	{

@@ -4,13 +4,13 @@
 #include "World.h"
 #include "Logger.h"
 #include "InputManager.h"
-#include "conio2.h"
 
 class Simulator {
 private:
 	World* world;
 	Logger* logger;
 	InputManager* manager;
+	static textCustomizer custom;
 private:
 	void setUpWorld();
 public:

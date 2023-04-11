@@ -14,64 +14,95 @@ void Logger::display()
 		addLog({ "                                  ",EMPTY });
 	auto it = logs.begin();
 	int i = 0;
-	textbackground(WHITE);
 	while (i < max_messages && it != logs.end()) {
-		gotoxy(startX, startY + i);
+		custom.gotoxy(startX, startY + i);
 		switch (logs.at(i).type)
 		{
 		case EMPTY:
-			textcolor(WHITE);
+			custom.textcolor(WHITE);
 			break;
 		case INFO:
-			textcolor(LIGHTBLUE);
+			custom.textcolor(LIGHTBLUE);
 			break;
 		case KILL:
-			textcolor(RED);
+			custom.textcolor(RED);
 			break;
 		case BIRTH:
-			textcolor(LIGHTGREEN);
+			custom.textcolor(LIGHTGREEN);
 			break;
 		case SOW:
-			textcolor(GREEN);
+			custom.textcolor(GREEN);
 			break;
 		case EAT:
-			textcolor(MAGENTA);
+			custom.textcolor(MAGENTA);
 			break;
 		case POISON:
-			textcolor(YELLOW);
+			custom.textcolor(YELLOW);
 			break;
 		default:
-			textcolor(BLACK);
+			custom.textcolor(BLACK);
 			break;
 		}
 		cout << logs.at(i).mess;
 		i++;
 		it++;
 	}
-	textcolor(WHITE);
-	textbackground(BLACK);
+	custom.textcolor(WHITE);
 	added = false;
 }
 
 void Logger::textMenu() const
 {
-	const int x = MAP_START_X + MAP_W + 3;
+	const int x = MAP_START_X + MAP_W + 30;
 	const int y = MAP_START_Y;
 
 	int i = y;
-	gotoxy(x, i++);
-	cout << "MACIEJ GÓRALCZYK 193302";
-	gotoxy(x, i++);
-	cout << "LEGENDA:";
-	gotoxy(x, i++);
-
-	gotoxy(x, i++);
-	gotoxy(x, i++);
-	gotoxy(x, i++);
-	cout << "Special ability (turns left) - " << input.getAbility();
-	gotoxy(x, i++);
-	cout << "Special ability (cooldown) - " << input.getAbilityCooldown();
-
+	custom.gotoxy(x, i++);
+	custom.textcolor(LIGHTGREEN);
+	cout << "MACIEJ GORALCZYK 193302";
+	custom.gotoxy(x, i++);
+	custom.textcolor(MAGENTA);
+	cout << "Legenda (pl):";
+	custom.gotoxy(x, i++);
+	custom.textcolor(CYAN);
+	cout << ABILITY_KEY << " - Umiejetnosc specjalna czlowieka";
+	custom.gotoxy(x, i++);
+	cout << END_SIMULATION_KEY << " - Zakoncz symulacje";
+	custom.gotoxy(x, i++);
+	custom.textcolor(BROWN);
+	cout << "Umiejetnosc specjalna (pozostalo tur) : " << input.getAbility();
+	custom.gotoxy(x, i++);
+	cout << "Umiejetnosc specjalna (cooldown) : " << input.getAbilityCooldown();
+	custom.gotoxy(x, i++);
+	custom.textcolor(DARKGRAY);
+	cout << "Postacie:";
+	custom.gotoxy(x, i++);
+	custom.textcolor(YELLOW);
+	cout << HUMAN_CHAR << " - Czlowiek";
+	custom.gotoxy(x, i++);
+	custom.textcolor(RED);
+	cout << WOLF_CHAR << " - Wilk";
+	custom.gotoxy(x, i++);
+	cout << SHEEP_CHAR << " - Owca";
+	custom.gotoxy(x, i++);
+	cout << FOX_CHAR << " - Lis";
+	custom.gotoxy(x, i++);
+	cout << TURTLE_CHAR << " - Zolw";
+	custom.gotoxy(x, i++);
+	cout << ANTELOPE_CHAR << " - Antyloopa";
+	custom.gotoxy(x, i++);
+	custom.textcolor(GREEN);
+	cout << GRASS_CHAR << " - Trawa";
+	custom.gotoxy(x, i++);
+	cout << DANDELION_CHAR << " - Mlecz";
+	custom.gotoxy(x, i++);
+	cout << GUARANA_CHAR << " - Guarana";
+	custom.gotoxy(x, i++);
+	cout << WOLF_BERRIES_CHAR << " - Wilcze Jagody";
+	custom.gotoxy(x, i++);
+	cout << GIANT_HOGWEED_CHAR << " - Barszcz Sosnowskiego";
+	custom.gotoxy(x, i++);
+	custom.textcolor(WHITE);
 }
 
 void Logger::addLog(const LogString& log)

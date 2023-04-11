@@ -19,6 +19,7 @@ protected:
 	pair<int, int> position;
 	World& world;
 	Logger& logger;
+	static textCustomizer custom;
 public:
 	Organism(World& w, Logger& l,const int s = 0, const int i = 0, const string species = "",
 		const pair<int, int> pos = make_pair<int, int>(0, 0));

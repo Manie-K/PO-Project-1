@@ -8,9 +8,9 @@ public:
 	Fox(World& w, Logger& l, pair<int, int> pos) :Animal(w, l, 3, 7, "Fox", pos) {};
 
 	void draw() const override {
-		textcolor(BROWN);
+		custom.textcolor(BROWN);
 		cout << FOX_CHAR;
-		textcolor(WHITE);
+		custom.textcolor(WHITE);
 	}
 
 	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos)const override
