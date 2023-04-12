@@ -14,7 +14,6 @@ private:
 	const int width, height;
 	vector<Organism*> organisms;
 	Organism*** map;
-	static textCustomizer custom;
 private:
 	void drawBorder();
 	static bool compareOrganismPointer(const Organism* o1, const Organism* o2);

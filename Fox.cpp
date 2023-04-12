@@ -8,9 +8,9 @@ public:
 	Fox(World& w, Logger& l, pair<int, int> pos) :Animal(w, l, 3, 7, "Fox", pos) {};
 
 	void draw() const override {
-		custom.textcolor(BROWN);
+		textCustomizer::textcolor(BROWN);
 		cout << FOX_CHAR;
-		custom.textcolor(WHITE);
+		textCustomizer::textcolor(WHITE);
 	}
 
 	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos)const override
@@ -20,8 +20,9 @@ public:
 
 	bool goodSmell(Animal* defender) const override
 	{
-		if (defender == nullptr)
+		if (defender == nullptr || defender->getStrenght() <= strenght)
 			return false;
-		return defender->getStrenght() > strenght;
+		logger.addLog({ species + "hasn't attacked " + defender->getSpecies() + " because of good smell",INFO });
+		return true;
 	}
 };

@@ -6,9 +6,9 @@ public:
 	~GiantHogweed() {}
 	void draw() const override
 	{
-		custom.textcolor(LIGHTRED);
+		textCustomizer::textcolor(LIGHTRED);
 		cout << GIANT_HOGWEED_CHAR;
-		custom.textcolor(WHITE);
+		textCustomizer::textcolor(WHITE);
 	}
 	bool kill(Organism* attacker) override
 	{
@@ -22,26 +22,26 @@ public:
 		if (position.second > 0 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first,position.second - 1 }))
 			!= nullptr)
 		{
-			killOrganism(world.getOrganismAtPos({ position.first,position.second - 1 }));
 			logger.addLog({ species + " killed " + world.getOrganismAtPos({ position.first,position.second - 1 })->getSpecies(),KILL });
+			killOrganism(world.getOrganismAtPos({ position.first,position.second - 1 }));
 		}
 		if (position.second < world.getHeight() - 1 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first,position.second + 1 }))
 			!= nullptr)
 		{
-			killOrganism(world.getOrganismAtPos({ position.first,position.second + 1 }));
 			logger.addLog({ species + " killed " + world.getOrganismAtPos({ position.first,position.second + 1 })->getSpecies(),KILL });
+			killOrganism(world.getOrganismAtPos({ position.first,position.second + 1 }));
 		}
 		if (position.first < world.getWidth() - 1 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first + 1,position.second }))
 			!= nullptr)
 		{
-			killOrganism(world.getOrganismAtPos({ position.first + 1,position.second }));
 			logger.addLog({ species + " killed " + world.getOrganismAtPos({ position.first+1,position.second })->getSpecies(),KILL });
+			killOrganism(world.getOrganismAtPos({ position.first + 1,position.second }));
 		}
 		if (position.first > 0 && dynamic_cast<Animal*>(world.getOrganismAtPos({ position.first - 1,position.second }))
 			!= nullptr)
 		{
-			killOrganism(world.getOrganismAtPos({ position.first - 1,position.second }));
 			logger.addLog({ species + " killed " + world.getOrganismAtPos({ position.first-1,position.second})->getSpecies(),KILL });
+			killOrganism(world.getOrganismAtPos({ position.first - 1,position.second }));
 		}
 	}
 	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos) const override

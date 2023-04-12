@@ -8,9 +8,9 @@ public:
 	Antelope(World& w, Logger& l, pair<int, int> pos) :Animal(w, l, 4, 4, "Antelope", pos) {};
 
 	void draw()const override {
-		custom.textcolor(LIGHTRED);
+		textCustomizer::textcolor(LIGHTRED);
 		cout << ANTELOPE_CHAR;
-		custom.textcolor(WHITE);
+		textCustomizer::textcolor(WHITE);
 	}
 
 	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos)const override

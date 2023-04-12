@@ -11,6 +11,8 @@ private:
 	int abilityLeft;
 	bool arrowKey;
 	bool quit;
+	bool save;
+	bool load;
 public:
 	InputManager();
 	~InputManager();
@@ -20,6 +22,8 @@ public:
 	int getAbilityCooldown() const;
 	int getInput() const;
 	bool getQuit() const;
+	bool getSave() const;
+	bool getLoad() const;
 	bool getArrowKey() const;
 
 	void nextTurn();

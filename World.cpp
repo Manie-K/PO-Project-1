@@ -53,7 +53,7 @@ void World::drawWorld()
 	{
 		for (int x = 0; x < width; x++)
 		{
-			custom.gotoxy(x+MAP_START_X+1, y+MAP_START_Y+1); //map start includes border, so + 1
+			textCustomizer::gotoxy(x+MAP_START_X+1, y+MAP_START_Y+1); //map start includes border, so + 1
 			if(map[y][x]!=nullptr)
 				map[y][x]->draw();
 		}
@@ -87,27 +87,27 @@ void World::simulateTurn()
 
 void World::drawBorder()
 {
-	custom.gotoxy(MAP_START_X, MAP_START_Y);
+	textCustomizer::gotoxy(MAP_START_X, MAP_START_Y);
 	for (int x = 0; x < width + 2; x++)
 	{
 		cout <<BORDER_CHAR;
 	}
-	custom.gotoxy(MAP_START_X, MAP_START_Y+height+1);
+	textCustomizer::gotoxy(MAP_START_X, MAP_START_Y+height+1);
 	for (int x = 0; x < width + 2; x++)
 	{
 		cout << BORDER_CHAR;
 	}
 	for (int y = 0; y < height+1; y++)
 	{
-		custom.gotoxy(MAP_START_X, MAP_START_Y+y);
+		textCustomizer::gotoxy(MAP_START_X, MAP_START_Y+y);
 		cout << BORDER_CHAR;
 	}
 	for (int y = 0; y < height + 1; y++)
 	{
-		custom.gotoxy(MAP_START_X+width+1, MAP_START_Y+y);
+		textCustomizer::gotoxy(MAP_START_X+width+1, MAP_START_Y+y);
 		cout << BORDER_CHAR;
 	}
-	custom.gotoxy(1, 15);
+	textCustomizer::gotoxy(1, 15);
 }
 
 Organism*& World::getOrganismAtPos(pair<int, int> pos)

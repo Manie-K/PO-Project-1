@@ -11,9 +11,9 @@ public:
 	Human(World& w, Logger& l,InputManager& man, pair<int, int> pos) :Animal(w, l, 5, 4, "Human", pos),inputManager(man) {};
 
 	void draw() const override {
-		custom.textcolor(YELLOW);
+		textCustomizer::textcolor(YELLOW);
 		cout << HUMAN_CHAR;
-		custom.textcolor(WHITE);
+		textCustomizer::textcolor(WHITE);
 	}
 
 	int howManyMoves() const override

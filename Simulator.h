@@ -1,4 +1,5 @@
 #pragma once
+#include <fstream>
 #include "Configuration.h"
 #include "OrganismIncludeList.h"
 #include "World.h"
@@ -10,9 +11,10 @@ private:
 	World* world;
 	Logger* logger;
 	InputManager* manager;
-	static textCustomizer custom;
 private:
 	void setUpWorld();
+	void save();
+	void load();
 public:
 	Simulator();
 	~Simulator();

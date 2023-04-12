@@ -6,9 +6,9 @@ public:
 	~Guarana() {}
 	void draw() const override
 	{
-		custom.textcolor(LIGHTCYAN);
+		textCustomizer::textcolor(LIGHTCYAN);
 		cout << GUARANA_CHAR;
-		custom.textcolor(WHITE);
+		textCustomizer::textcolor(WHITE);
 	}
 	void modify(Organism* attacker) const override
 	{
