@@ -2,7 +2,7 @@
 #include <vector>
 #include <algorithm>
 #include "Configuration.h"
-
+#include "InputManager.h"
 
 using namespace std;
 
@@ -18,7 +18,7 @@ private:
 	void drawBorder();
 	static bool compareOrganismPointer(const Organism* o1, const Organism* o2);
 public:
-	World(int w, int h, Logger& logger);
+	World(int w, int h);
 	~World();
 
 	int getWidth() const;
@@ -29,4 +29,7 @@ public:
 
 	void drawWorld();
 	void simulateTurn();
+
+	void saveFile(FILE* f);
+	static World* loadFile(FILE* f, Logger& logger, InputManager& input);
 };

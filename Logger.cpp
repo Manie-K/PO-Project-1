@@ -5,6 +5,17 @@ Logger::Logger(const int x, const int y, InputManager& in):startX(x),startY(y),a
 	logs.clear();
 }
 
+Logger::Logger(const int x, const int y, InputManager& in, deque<LogString> log, bool add) :startX(x), startY(y), added(add), input(in)
+{
+	int size = log.size();
+	logs.clear();
+	for (int i = 0; i < size; i++)
+	{
+		logs.push_back(logs[i]);
+	}
+}
+
+
 Logger::~Logger(){logs.clear();}
 
 void Logger::display()
@@ -115,4 +126,35 @@ void Logger::addLog(const LogString& log)
 	logs.push_front(log);
 	if (logs.size() > max_messages)
 		logs.pop_back();
+}
+
+void Logger::saveFile(FILE* f)
+{
+	fwrite(&startX, sizeof(int), 1, f);
+	fwrite(&startY, sizeof(int), 1, f);
+	fwrite(&added, sizeof(bool), 1, f);
+	int size = logs.size();
+	fwrite(&size, sizeof(int), 1, f);
+	for (auto i : logs) {
+		fwrite(&i, sizeof(LogString), 1, f); // write each element of the deque to the file
+	}
+}
+Logger* Logger::loadFile(FILE* f, InputManager& in)
+{
+	deque<LogString> logs;
+	int startX, startY;
+	bool added;
+	int size;
+	fread(&startX, sizeof(int), 1, f);
+	fread(&startY, sizeof(int), 1, f);
+	fread(&added, sizeof(bool), 1, f);
+	fread(&size, sizeof(size_t), 1, f); // read the size of the deque from the file
+
+	for (int i = 0; i < size; i++) {
+		LogString elem;
+		fread(&elem, sizeof(LogString), 1, f); // read each element of the deque from the file
+		logs.push_back(elem);
+	}
+
+	return new Logger(startX, startY, in, logs, added);
 }

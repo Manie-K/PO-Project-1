@@ -6,7 +6,7 @@ Simulator::Simulator()
 	srand(time(NULL));
 	manager = new InputManager;
 	logger = new Logger(1,MAP_START_Y+MAP_H+LOG_POS_OFFSET,*manager);
-	world = new World(MAP_W, MAP_H, *logger);
+	world = new World(MAP_W, MAP_H);
 	setUpWorld();
 }
 Simulator::~Simulator()
@@ -63,12 +63,12 @@ void Simulator::save()
 	cout << "Wprowadz nazwe pliku zapisu: ";
 	string fName;
 	cin >> fName;
-	FILE* file = fopen(fName.c_str(), "w");
+	FILE* file = fopen(fName.c_str(), "wb");
 	try {
 		if (file) {
-			fwrite(manager, sizeof(manager), 1, file);
-			fwrite(logger, sizeof(logger), 1, file);
-			fwrite(world, sizeof(world), 1, file);
+			manager->saveFile(file);
+			logger->saveFile(file);
+			world->saveFile(file);
 			fclose(file);
 		}
 		else
@@ -93,15 +93,15 @@ void Simulator::load()
 	string fName;
 	cin >> fName;
 
-	FILE* file = fopen(fName.c_str(), "r");
+	FILE* file = fopen(fName.c_str(), "rb");
 	try {
 		delete world;
 		delete logger;
 		delete manager;
 		if (file) {
-			fread(manager, sizeof(manager), 1, file);
-			fread(logger, sizeof(logger), 1, file);
-			fread(world, sizeof(world), 1, file);
+			manager = InputManager::loadFile(file);
+			logger = Logger::loadFile(file,*manager);
+			world = World::loadFile(file,*logger,*manager);
 			fclose(file);
 			textCustomizer::textcolor(WHITE);
 			logger->addLog({ "Pomyslnie wczytano swiat",INFO });

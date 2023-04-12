@@ -7,6 +7,17 @@ InputManager::InputManager()
 	inputChar = abilityLeft = abilityCooldown= 0;
 }
 
+InputManager::InputManager(bool q, bool s, bool l, bool a, int i, int al, int ac)
+{
+	quit = q;
+	save = s;
+	load = l;
+	arrowKey = a;
+	inputChar = i;
+	abilityLeft = al;
+	abilityCooldown = ac;
+}
+
 InputManager::~InputManager(){}
 
 void InputManager::input()
@@ -55,4 +66,28 @@ void InputManager::nextTurn()
 		abilityLeft--;
 	if (abilityCooldown > 0)
 		abilityCooldown--;
+}
+
+void InputManager::saveFile(FILE* f)
+{
+	fwrite(&quit, sizeof(bool), 1, f);
+	fwrite(&save, sizeof(bool), 1, f);
+	fwrite(&load, sizeof(bool), 1, f);
+	fwrite(&arrowKey, sizeof(bool), 1, f);
+	fwrite(&inputChar, sizeof(int), 1, f);
+	fwrite(&abilityLeft, sizeof(int), 1, f);
+	fwrite(&abilityCooldown, sizeof(int), 1, f);
+}
+InputManager* InputManager::loadFile(FILE* f)
+{
+	bool quit,save,load , arrowKey;
+	int inputChar, abilityLeft, abilityCooldown;
+	fread(&quit, sizeof(bool), 1, f);
+	fread(&save, sizeof(bool), 1, f);
+	fread(&load, sizeof(bool), 1, f);
+	fread(&arrowKey, sizeof(bool), 1, f);
+	fread(&inputChar, sizeof(int), 1, f);
+	fread(&abilityLeft, sizeof(int), 1, f);
+	fread(&abilityCooldown, sizeof(int), 1, f);
+	return new InputManager(quit, save, load, arrowKey, inputChar, abilityLeft, abilityCooldown);
 }

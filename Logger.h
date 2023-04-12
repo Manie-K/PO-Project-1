@@ -32,8 +32,12 @@ private:
 	deque<LogString> logs;
 public:
 	Logger(const int x, const int y, InputManager& in);
+	Logger(const int x, const int y, InputManager& in, deque<LogString> log, bool add);
 	~Logger();
 	void display();
 	void textMenu() const;
 	void addLog(const LogString& log);
+
+	void saveFile(FILE* f);
+	static Logger* loadFile(FILE* f, InputManager& in);
 };

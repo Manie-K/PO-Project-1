@@ -32,6 +32,9 @@ public:
 	void setStrenght(int strenght);
 	void setPosition(pair<int, int> pos);
 
+	void save(FILE* f)const;
+	static Organism* load(FILE* f, World& wor, Logger& log, InputManager& input);
+
 	virtual ~Organism()= 0;
 
 	virtual void action() = 0;
