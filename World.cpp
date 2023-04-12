@@ -142,7 +142,8 @@ void World::saveFile(FILE* f)
 		for(int x = 0;  x< width; x++)
 		{
 			Organism* org = map[y][x];
-			fwrite(org, sizeof(Organism), 1, f); 
+			if(org!=nullptr)
+				fwrite(org, sizeof(Organism), 1, f); 
 		}
 	}
 }

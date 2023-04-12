@@ -136,7 +136,11 @@ void Logger::saveFile(FILE* f)
 	int size = logs.size();
 	fwrite(&size, sizeof(int), 1, f);
 	for (auto i : logs) {
-		fwrite(&i, sizeof(LogString), 1, f); // write each element of the deque to the file
+		int size = (int)i.mess.size();
+		int en = i.type;
+		fwrite(&size, sizeof(int), 1, f);
+		fwrite(&i.mess, size, 1, f);
+		fwrite(&en, sizeof(int), 1, f);
 	}
 }
 Logger* Logger::loadFile(FILE* f, InputManager& in)
@@ -152,7 +156,15 @@ Logger* Logger::loadFile(FILE* f, InputManager& in)
 
 	for (int i = 0; i < size; i++) {
 		LogString elem;
-		fread(&elem, sizeof(LogString), 1, f); // read each element of the deque from the file
+		int size;
+		Type type;
+		fread(&size, sizeof(int), 1, f);
+		char* temp = new char[size + 1];
+		fread(&temp, size, 1, f); // read each element of the deque from the file
+		temp[size] = '\0';
+		fread(&type, sizeof(int), 1, f); // read each element of the deque from the file
+		elem.mess = string(temp);
+		elem.type = type;
 		logs.push_back(elem);
 	}
 
