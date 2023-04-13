@@ -1,7 +1,6 @@
 #include "Guarana.h"
 
 Guarana::Guarana(World& w, Logger& l, pair<int, int> pos) :Plant(w, l, 0, "Guarana", pos) {}
-Guarana::~Guarana() {}
 void Guarana::draw() const 
 {
 	textCustomizer::textcolor(LIGHTCYAN);

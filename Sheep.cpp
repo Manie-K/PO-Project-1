@@ -1,7 +1,4 @@
 #include "Sheep.h"
-#include <iostream>
-
-using namespace std;
 
 Sheep::Sheep(World& w, Logger& l, pair<int, int> pos, int s) :Animal(w,l, s, 4, "Sheep", pos) {};
 

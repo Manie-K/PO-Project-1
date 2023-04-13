@@ -1,7 +1,4 @@
 #include "Antelope.h"
-#include <iostream>
-
-using namespace std;
 
 Antelope::Antelope(World& w, Logger& l, pair<int, int> pos, int s) :Animal(w, l, s, 4, "Antelope", pos) {};
 

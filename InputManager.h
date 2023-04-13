@@ -1,6 +1,8 @@
 #pragma once
-#include <iostream>
 #include "Configuration.h"
+#include <iostream>
+#include <conio.h>
+#include <fstream>
 
 using namespace std;
 
@@ -18,9 +20,9 @@ public:
 	~InputManager();
 	void input();
 
+	int getInput() const;
 	int getAbility() const;
 	int getAbilityCooldown() const;
-	int getInput() const;
 	bool getQuit() const;
 	bool getSave() const;
 	bool getLoad() const;

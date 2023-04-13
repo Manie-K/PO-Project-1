@@ -1,7 +1,4 @@
 #include "Fox.h"
-#include <iostream>
-
-using namespace std;
 
 Fox::Fox(World& w, Logger& l, pair<int, int> pos, int s) :Animal(w, l, s, 7, "Fox", pos) {};
 
@@ -19,6 +16,6 @@ bool Fox::goodSmell(Animal* defender) const
 {
 	if (defender == nullptr || defender->getStrenght() <= strenght)
 		return false;
-	logger.addLog({ species + "hasn't attacked " + defender->getSpecies() + " because of good smell",INFO });
+	logger.addLog({ species + " hasn't attacked " + defender->getSpecies() + " because of good smell",INFO });
 	return true;
 }
