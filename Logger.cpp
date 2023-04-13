@@ -61,6 +61,7 @@ void Logger::display()
 		it++;
 	}
 	textCustomizer::textcolor(WHITE);
+	textCustomizer::gotoxy(1,1);
 	added = false;
 }
 

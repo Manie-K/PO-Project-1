@@ -3,10 +3,33 @@
 
 void Simulator::setUpWorld()
 {
-	Human* human = new Human(*world, *logger,*manager, { 0,1});
-	Fox* f1 = new Fox(*world, *logger, { 0, 0 });	
-}
+	Organism* o1 = new Human(*world, *logger, *manager, { 20,10 });
+	Organism* o2a = new Fox(*world, *logger, { 10,10 });
+	Organism* o2b = new Fox(*world, *logger, { 1,15 });
+	Organism* o2c = new Fox(*world, *logger, { 1,17 });
+	Organism* o2d = new Fox(*world, *logger, { 9,8 });
+	Organism* o2e = new Fox(*world, *logger, { 9,3 });
+	Organism* o3a = new Wolf(*world, *logger, { 1,3 });
+	Organism* o3b = new Wolf(*world, *logger, { 19,5 });
+	Organism* o4a = new Sheep(*world, *logger, { 3,19 });
+	Organism* o4b = new Sheep(*world, *logger, { 9,19 });
+	Organism* o4c = new Sheep(*world, *logger, { 30,19 });
+	Organism* o4d = new Sheep(*world, *logger, { 35,15 });
+	Organism* o4e = new Sheep(*world, *logger, { 33,5 });
+	Organism* o4f = new Sheep(*world, *logger, { 34,8 });
+	Organism* o5a = new Antelope(*world, *logger, { 6,16 });
+	Organism* o5b = new Antelope(*world, *logger, { 16,6 });
+	Organism* o5c = new Antelope(*world, *logger, { 13,11 });
+	Organism* o6a= new Turtle(*world, *logger, { 11,14 });
+	Organism* o6b= new Turtle(*world, *logger, { 1,4 });
+	Organism* o6c = new Turtle(*world, *logger, { 37,9 });
+	Organism* o10b = new Grass(*world, *logger, { 31,18 });
+	Organism* o11a = new Dandelion(*world, *logger, { 30,3 });
+	Organism* o13a = new Guarana(*world, *logger, { 1,1 });
+	Organism* o14 = new GiantHogweed(*world, *logger, { 27,17 });
+	Organism* o15b = new WolfBerries(*world, *logger, { 29,12 });
 
+}
 
 Simulator::Simulator()
 {

@@ -37,7 +37,7 @@ void Plant::action()
 				}
 				else if (dir == 2) //RIGHT
 				{
-					if (position.first > world.getWidth() - 1 && world.getOrganismAtPos({ position.first + 1,position.second }) == nullptr)
+					if (position.first < world.getWidth() - 1 && world.getOrganismAtPos({ position.first + 1,position.second }) == nullptr)
 					{
 						sow({ position.first + 1,position.second });
 						noGoodTile = x;

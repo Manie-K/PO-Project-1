@@ -69,5 +69,5 @@ Organism* Organism::load(fstream& f, World& wor, Logger& log, InputManager& inpu
 		return new WolfBerries(wor, log, pos);
 	if (spec == "GiantHogweed")
 		return new GiantHogweed(wor, log, pos);
-	
+	return nullptr;
 }

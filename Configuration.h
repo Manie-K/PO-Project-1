@@ -17,7 +17,7 @@
 
 #define ABILITY_TIME 5
 #define ABILITY_COOLDOWN 10
-#define PLANT_SEED_CHANCE 0.22
+#define PLANT_SEED_CHANCE 0.18
 
 #define MAP_W 40
 #define MAP_H 20

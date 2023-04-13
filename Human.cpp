@@ -1,7 +1,7 @@
 #include "Human.h"
 
 Human::Human(World& w, Logger& l,InputManager& man, pair<int, int> pos, int s):
-	Animal(w, l, s, 4, "Human", pos),inputManager(man) {}; //ZMIENIC INICJATYWE
+	Animal(w, l, s, 4, "Human", pos),inputManager(man) {};
 
 void Human::draw() const {
 	textCustomizer::textcolor(LIGHTMAGENTA);
