@@ -11,7 +11,7 @@ private:
 
 protected:
 	virtual bool defenderFlee(Animal* attacker);
-	virtual bool defenderDeflected(Animal* attacker);
+	virtual bool defenderDeflected(Animal* attacker) const;
 	virtual bool goodSmell(Animal* defender) const;
 	virtual int howManyMoves() const;
 	virtual float chanceToStay() const;

@@ -1,7 +1,6 @@
 #include "WolfBerries.h"
 
 WolfBerries::WolfBerries(World& w, Logger& l, pair<int, int> pos) :Plant(w, l, 99, "WolfBerries", pos) {}
-WolfBerries::~WolfBerries() {}
 void WolfBerries::draw() const 
 {
 	textCustomizer::textcolor(LIGHTMAGENTA);

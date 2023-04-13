@@ -13,14 +13,14 @@
 
 #define LOG_MAX_MESSAGES 12
 #define LOG_POS_OFFSET 4
-
 #define DIRECTION_COUNT 4
+
 #define ABILITY_TIME 5
 #define ABILITY_COOLDOWN 10
 #define PLANT_SEED_CHANCE 0.22
 
-#define MAP_W 16
-#define MAP_H 8
+#define MAP_W 40
+#define MAP_H 20
 
 #define MAP_START_X 1
 #define MAP_START_Y 1
@@ -40,7 +40,7 @@
 #define WOLF_BERRIES_CHAR '%'
 #define GIANT_HOGWEED_CHAR '!' //barsz sosnowskiego
 
-
+//colors
 #define BLACK			0
 #define BLUE			1
 #define GREEN			2

@@ -1,6 +1,13 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Simulator.h"
 
+void Simulator::setUpWorld()
+{
+	Human* human = new Human(*world, *logger,*manager, { 0,1});
+	Fox* f1 = new Fox(*world, *logger, { 0, 0 });	
+}
+
+
 Simulator::Simulator()
 {
 	srand(time(NULL));
@@ -22,6 +29,7 @@ Simulator::~Simulator()
 void Simulator::run()
 {
 	textCustomizer::disableCursor();
+
 	world->drawWorld();
 	logger->display();
 	while (!manager->getQuit())
@@ -45,16 +53,6 @@ void Simulator::run()
 	}
 }
 
-void Simulator::setUpWorld()
-{
-	Human* human = new Human(*world, *logger,*manager, { 1, 5});
-	Fox* f1 = new Fox(*world, *logger, { 6, 7 });
-	Dandelion* d1 = new Dandelion(*world, *logger, { 15, 7 });
-	Grass* g1 = new Grass(*world, *logger, { 3, 5 });
-	Guarana* gu1 = new Guarana(*world, *logger, {6, 2 });
-	WolfBerries* w1 = new WolfBerries(*world, *logger, { 7, 0 });
-	GiantHogweed* h1 = new GiantHogweed(*world, *logger, { 5, 1 });
-}
 
 void Simulator::save()
 {
@@ -71,6 +69,10 @@ void Simulator::save()
 			manager->saveFile(file);
 			world->saveFile(file);
 			file.close();
+			textCustomizer::textcolor(WHITE);
+			logger->addLog({ "Pomyslnie zapisano do pliku", INFO });
+			world->drawWorld();
+			logger->display();
 		}
 		else
 			throw runtime_error("Nie udalo sie zapisac do pliku\n");
@@ -79,10 +81,6 @@ void Simulator::save()
 	{
 		cerr << "Error: " << e.what() << endl;
 	}
-	textCustomizer::textcolor(WHITE);
-	logger->addLog({ "Pomyslnie zapisano do pliku", INFO });
-	world->drawWorld();
-	logger->display();
 }
 
 void Simulator::load()

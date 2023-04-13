@@ -2,7 +2,6 @@
 
 
 GiantHogweed::GiantHogweed(World& w, Logger& l, pair<int, int> pos) :Plant(w, l, 10, "GiantHogweed", pos) {}
-GiantHogweed::~GiantHogweed() {}
 void GiantHogweed::draw() const 
 {
 	textCustomizer::textcolor(LIGHTRED);

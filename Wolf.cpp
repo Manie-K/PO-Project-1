@@ -1,8 +1,6 @@
 #include "Wolf.h"
 
-using namespace std;
-
-Wolf::Wolf(World& w, Logger& l, pair<int,int> pos,int s) :Animal(w,l, s, 5, "Wolf", pos) {};
+Wolf::Wolf(World& w, Logger& l, pair<int,int> pos,int s) : Animal(w,l, s, 5, "Wolf", pos) {};
 
 void Wolf::draw() const{
 	textCustomizer::textcolor(RED);
@@ -10,7 +8,7 @@ void Wolf::draw() const{
 	textCustomizer::textcolor(WHITE);
 }
 
-Organism* Wolf::giveBirth(World& w, Logger& l, pair<int, int> pos)const
+Organism* Wolf::giveBirth(World& w, Logger& l, pair<int, int> pos) const
 {
 	return new Wolf(w,l, pos);
 }

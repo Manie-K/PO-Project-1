@@ -1,7 +1,6 @@
 #include "Dandelion.h"
 
 Dandelion::Dandelion(World& w, Logger& l, pair<int, int> pos) :Plant(w, l, 0, "Dandelion", pos) {}
-Dandelion::~Dandelion() {}
 void Dandelion::draw() const
 {
 	textCustomizer::textcolor(YELLOW);

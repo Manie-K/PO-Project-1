@@ -1,6 +1,4 @@
 #include "InputManager.h"
-#include <conio.h>
-#include <fstream>
 
 InputManager::InputManager(int al, int ac)
 {
@@ -44,13 +42,13 @@ void InputManager::input()
 	}
 }
 
-int InputManager::getAbility() const { return abilityLeft; }
-int InputManager::getAbilityCooldown() const { return abilityCooldown; }
-int InputManager::getInput() const{return inputChar;}
 bool InputManager::getQuit() const { return quit; }
 bool InputManager::getSave() const { return save; }
 bool InputManager::getLoad() const { return load; }
 bool InputManager::getArrowKey() const { return arrowKey; }
+int InputManager::getInput() const{return inputChar;}
+int InputManager::getAbility() const { return abilityLeft; }
+int InputManager::getAbilityCooldown() const { return abilityCooldown; }
 
 void InputManager::nextTurn()
 {

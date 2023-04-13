@@ -1,7 +1,4 @@
 #include "Turtle.h"
-#include <iostream>
-
-using namespace std;
 
 Turtle::Turtle(World& w, Logger& l, pair<int, int> pos, int s) :Animal(w, l, s, 1, "Turtle", pos) {};
 
@@ -16,9 +13,11 @@ float Turtle::chanceToStay() const
 	return 0.75f;
 }
 
-bool Turtle::defenderDeflected(Animal* attacker)
+bool Turtle::defenderDeflected(Animal* attacker) const
 {
-	return attacker->getStrenght() < 5;
+	if(attacker!=nullptr)
+		return attacker->getStrenght() < 5;
+	return false;
 }
 
 Organism* Turtle::giveBirth(World& w, Logger& l, pair<int, int> pos)const

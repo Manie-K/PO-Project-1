@@ -11,8 +11,9 @@ private:
 	World* world;
 	Logger* logger;
 	InputManager* manager;
+
 private:
-	void setUpWorld();
+	void setUpWorld(); //here are the initial conditions
 	void save();
 	void load();
 public:

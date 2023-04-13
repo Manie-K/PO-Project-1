@@ -1,5 +1,4 @@
 #include "Organism.h"
-#include "Animal.h"
 #include <iostream>
 #include <fstream>
 
@@ -18,37 +17,26 @@ World::World(int w, int h):width(w),height(h)
 
 World::~World()
 {
+	organisms.clear();
 	for (int y = 0; y < height; y++)
 	{
-		for (int x = 0; x < width; x++)
-		{
-			//delete map[y][x];
-			map[y][x] = nullptr;
-		}
-		//delete[] map[y];
+		
 		map[y] = nullptr;
 	}
-	//delete[] map;
+	delete[] map;
 	map = nullptr;
 }
 
-int World::getWidth() const
-{
-	return width;
-}
+int World::getWidth() const { return width; }
 
-int World::getHeight() const
-{
-	return height;
-}
+int World::getHeight() const { return height; }
 
-vector<Organism*>& World::getOrganisms(){return organisms;}
+vector<Organism*>& World::getOrganisms(){ return organisms; }
 
 Organism*** World::getMap() { return map; }
 
 void World::drawWorld()
 {
-	
 	system("cls");
 	drawBorder();
 	for (int y = 0; y < height; y++)
@@ -60,6 +48,7 @@ void World::drawWorld()
 				map[y][x]->draw();
 		}
 	}
+	textCustomizer::gotoxy(1, 1);
 }
 
 bool World::compareOrganismPointer(const Organism* o1, const Organism* o2)
@@ -109,7 +98,6 @@ void World::drawBorder()
 		textCustomizer::gotoxy(MAP_START_X+width+1, MAP_START_Y+y);
 		cout << BORDER_CHAR;
 	}
-	textCustomizer::gotoxy(1, 15);
 }
 
 Organism*& World::getOrganismAtPos(pair<int, int> pos)
