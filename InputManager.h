@@ -14,8 +14,7 @@ private:
 	int abilityLeft;
 	int abilityCooldown;
 public:
-	InputManager();
-	InputManager(bool q, bool s, bool l, bool a, int i, int al, int ac);
+	InputManager(int al = 0, int ac = 0);
 	~InputManager();
 	void input();
 
@@ -28,6 +27,6 @@ public:
 	bool getArrowKey() const;
 
 	void nextTurn();
-	void saveFile(FILE* f);
-	static InputManager* loadFile(FILE* f);
+	void saveFile(fstream& f);
+	static InputManager* loadFile(fstream& f);
 };

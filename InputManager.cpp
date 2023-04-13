@@ -1,19 +1,11 @@
 #include "InputManager.h"
 #include <conio.h>
+#include <fstream>
 
-InputManager::InputManager()
+InputManager::InputManager(int al, int ac)
 {
 	quit = save = load = arrowKey = false;
-	inputChar = abilityLeft = abilityCooldown= 0;
-}
-
-InputManager::InputManager(bool q, bool s, bool l, bool a, int i, int al, int ac)
-{
-	quit = q;
-	save = s;
-	load = l;
-	arrowKey = a;
-	inputChar = i;
+	inputChar = 0;
 	abilityLeft = al;
 	abilityCooldown = ac;
 }
@@ -68,26 +60,13 @@ void InputManager::nextTurn()
 		abilityCooldown--;
 }
 
-void InputManager::saveFile(FILE* f)
+void InputManager::saveFile(fstream& f)
 {
-	fwrite(&quit, sizeof(bool), 1, f);
-	fwrite(&save, sizeof(bool), 1, f);
-	fwrite(&load, sizeof(bool), 1, f);
-	fwrite(&arrowKey, sizeof(bool), 1, f);
-	fwrite(&inputChar, sizeof(int), 1, f);
-	fwrite(&abilityLeft, sizeof(int), 1, f);
-	fwrite(&abilityCooldown, sizeof(int), 1, f);
+	f << abilityLeft << " " << abilityCooldown << endl;
 }
-InputManager* InputManager::loadFile(FILE* f)
+InputManager* InputManager::loadFile(fstream& f)
 {
-	bool quit,save,load , arrowKey;
-	int inputChar, abilityLeft, abilityCooldown;
-	fread(&quit, sizeof(bool), 1, f);
-	fread(&save, sizeof(bool), 1, f);
-	fread(&load, sizeof(bool), 1, f);
-	fread(&arrowKey, sizeof(bool), 1, f);
-	fread(&inputChar, sizeof(int), 1, f);
-	fread(&abilityLeft, sizeof(int), 1, f);
-	fread(&abilityCooldown, sizeof(int), 1, f);
-	return new InputManager(quit, save, load, arrowKey, inputChar, abilityLeft, abilityCooldown);
+	int abilityLeft, abilityCooldown;
+	f >> abilityLeft>> abilityCooldown;
+	return new InputManager(abilityLeft, abilityCooldown);
 }

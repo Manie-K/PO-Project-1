@@ -63,13 +63,14 @@ void Simulator::save()
 	cout << "Wprowadz nazwe pliku zapisu: ";
 	string fName;
 	cin >> fName;
-	FILE* file = fopen(fName.c_str(), "wb");
+
+	fstream file;
+	file.open(fName.c_str(), ios::out);
 	try {
-		if (file) {
+		if (file.good()) {
 			manager->saveFile(file);
-			logger->saveFile(file);
 			world->saveFile(file);
-			fclose(file);
+			file.close();
 		}
 		else
 			throw runtime_error("Nie udalo sie zapisac do pliku\n");
@@ -93,16 +94,17 @@ void Simulator::load()
 	string fName;
 	cin >> fName;
 
-	FILE* file = fopen(fName.c_str(), "rb");
+	fstream file;
+	file.open(fName.c_str(), ios::in);
 	try {
 		delete world;
 		delete logger;
 		delete manager;
-		if (file) {
+		if (file.good()) {
 			manager = InputManager::loadFile(file);
-			logger = Logger::loadFile(file,*manager);
+			logger = new Logger(1, MAP_START_Y + MAP_H + LOG_POS_OFFSET,*manager);
 			world = World::loadFile(file,*logger,*manager);
-			fclose(file);
+			file.close();
 			textCustomizer::textcolor(WHITE);
 			logger->addLog({ "Pomyslnie wczytano swiat",INFO });
 			world->drawWorld();
