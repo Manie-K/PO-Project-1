@@ -19,6 +19,11 @@ protected:
 	pair<int, int> position;
 	World& world;
 	Logger& logger;
+
+protected:
+	virtual bool collision(Organism* other) = 0;//returns true when the attacker dies
+	virtual Organism* giveBirth(World& w, Logger& l, pair<int, int> pos) const = 0;
+	void killOrganism(Organism* victim);
 public:
 	Organism(World& w, Logger& l,const int s = 0, const int i = 0, const string species = "",
 		const pair<int, int> pos = make_pair<int, int>(0, 0));
@@ -32,13 +37,11 @@ public:
 	void setStrenght(int strenght);
 	void setPosition(pair<int, int> pos);
 
-	virtual ~Organism()= 0;
+	void save(fstream& f)const;
+	static Organism* load(fstream& f, World& wor, Logger& log, InputManager& input);
+
+	virtual ~Organism() = 0;
 
 	virtual void action() = 0;
 	virtual void draw() const = 0;
-
-protected:
-	virtual bool collision(Organism* other) = 0;//returns true when the attacker dies
-	virtual Organism* giveBirth(World& w, Logger& l, pair<int, int> pos) const = 0;
-	void killOrganism(Organism* victim);
 };

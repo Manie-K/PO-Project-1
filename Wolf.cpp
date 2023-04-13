@@ -1,20 +1,14 @@
-#include "Animal.h"
-#include <iostream>
+#include "Wolf.h"
 
-using namespace std;
+Wolf::Wolf(World& w, Logger& l, pair<int,int> pos,int s) : Animal(w,l, s, 5, "Wolf", pos) {};
 
-class Wolf : public Animal {
-public:
-	Wolf(World& w, Logger& l, pair<int,int> pos) :Animal(w,l, 9, 5, "Wolf", pos) {};
-	
-	void draw() const override {
-		textCustomizer::textcolor(RED);
-		cout << WOLF_CHAR;
-		textCustomizer::textcolor(WHITE);
-	}
+void Wolf::draw() const{
+	textCustomizer::textcolor(RED);
+	cout << WOLF_CHAR;
+	textCustomizer::textcolor(WHITE);
+}
 
-	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos)const override
-	{
-		return new Wolf(w,l, pos);
-	}
-};
+Organism* Wolf::giveBirth(World& w, Logger& l, pair<int, int> pos) const
+{
+	return new Wolf(w,l, pos);
+}

@@ -5,13 +5,26 @@ Logger::Logger(const int x, const int y, InputManager& in):startX(x),startY(y),a
 	logs.clear();
 }
 
-Logger::~Logger(){logs.clear();}
+Logger::Logger(const int x, const int y, InputManager& in, deque<LogString> log, bool add) :startX(x), startY(y), added(add), input(in)
+{
+	int size = log.size();
+	logs.clear();
+	for (int i = 0; i < size; i++)
+	{
+		logs.push_back(logs[i]);
+	}
+}
+
+Logger::~Logger()
+{
+	logs.clear();
+}
 
 void Logger::display()
 {
 	textMenu();
 	if(!added)
-		addLog({ "                                  ",EMPTY });
+		addLog({"                                  ",EMPTY});
 	auto it = logs.begin();
 	int i = 0;
 	while (i < max_messages && it != logs.end()) {
@@ -53,7 +66,7 @@ void Logger::display()
 
 void Logger::textMenu() const
 {
-	const int x = MAP_START_X + MAP_W + 30;
+	const int x = MAP_START_X + MAP_W + 35;
 	const int y = MAP_START_Y;
 
 	int i = y;

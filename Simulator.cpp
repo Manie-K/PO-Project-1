@@ -1,12 +1,19 @@
 #define _CRT_SECURE_NO_WARNINGS
 #include "Simulator.h"
 
+void Simulator::setUpWorld()
+{
+	Human* human = new Human(*world, *logger,*manager, { 0,1});
+	Fox* f1 = new Fox(*world, *logger, { 0, 0 });	
+}
+
+
 Simulator::Simulator()
 {
 	srand(time(NULL));
 	manager = new InputManager;
 	logger = new Logger(1,MAP_START_Y+MAP_H+LOG_POS_OFFSET,*manager);
-	world = new World(MAP_W, MAP_H, *logger);
+	world = new World(MAP_W, MAP_H);
 	setUpWorld();
 }
 Simulator::~Simulator()
@@ -22,6 +29,7 @@ Simulator::~Simulator()
 void Simulator::run()
 {
 	textCustomizer::disableCursor();
+
 	world->drawWorld();
 	logger->display();
 	while (!manager->getQuit())
@@ -45,16 +53,6 @@ void Simulator::run()
 	}
 }
 
-void Simulator::setUpWorld()
-{
-	Human* human = new Human(*world, *logger,*manager, { 1, 5});
-	Fox* f1 = new Fox(*world, *logger, { 6, 7 });
-	Dandelion* d1 = new Dandelion(*world, *logger, { 15, 7 });
-	Grass* g1 = new Grass(*world, *logger, { 3, 5 });
-	Guarana* gu1 = new Guarana(*world, *logger, {6, 2 });
-	WolfBerries* w1 = new WolfBerries(*world, *logger, { 7, 0 });
-	GiantHogweed* h1 = new GiantHogweed(*world, *logger, { 5, 1 });
-}
 
 void Simulator::save()
 {
@@ -63,13 +61,18 @@ void Simulator::save()
 	cout << "Wprowadz nazwe pliku zapisu: ";
 	string fName;
 	cin >> fName;
-	FILE* file = fopen(fName.c_str(), "w");
+
+	fstream file;
+	file.open(fName.c_str(), ios::out);
 	try {
-		if (file) {
-			fwrite(manager, sizeof(manager), 1, file);
-			fwrite(logger, sizeof(logger), 1, file);
-			fwrite(world, sizeof(world), 1, file);
-			fclose(file);
+		if (file.good()) {
+			manager->saveFile(file);
+			world->saveFile(file);
+			file.close();
+			textCustomizer::textcolor(WHITE);
+			logger->addLog({ "Pomyslnie zapisano do pliku", INFO });
+			world->drawWorld();
+			logger->display();
 		}
 		else
 			throw runtime_error("Nie udalo sie zapisac do pliku\n");
@@ -78,10 +81,6 @@ void Simulator::save()
 	{
 		cerr << "Error: " << e.what() << endl;
 	}
-	textCustomizer::textcolor(WHITE);
-	logger->addLog({ "Pomyslnie zapisano do pliku", INFO });
-	world->drawWorld();
-	logger->display();
 }
 
 void Simulator::load()
@@ -93,16 +92,17 @@ void Simulator::load()
 	string fName;
 	cin >> fName;
 
-	FILE* file = fopen(fName.c_str(), "r");
+	fstream file;
+	file.open(fName.c_str(), ios::in);
 	try {
 		delete world;
 		delete logger;
 		delete manager;
-		if (file) {
-			fread(manager, sizeof(manager), 1, file);
-			fread(logger, sizeof(logger), 1, file);
-			fread(world, sizeof(world), 1, file);
-			fclose(file);
+		if (file.good()) {
+			manager = InputManager::loadFile(file);
+			logger = new Logger(1, MAP_START_Y + MAP_H + LOG_POS_OFFSET,*manager);
+			world = World::loadFile(file,*logger,*manager);
+			file.close();
 			textCustomizer::textcolor(WHITE);
 			logger->addLog({ "Pomyslnie wczytano swiat",INFO });
 			world->drawWorld();

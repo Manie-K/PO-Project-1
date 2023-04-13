@@ -1,21 +1,14 @@
-#include "Animal.h"
-#include <iostream>
+#include "Sheep.h"
 
-using namespace std;
+Sheep::Sheep(World& w, Logger& l, pair<int, int> pos, int s) :Animal(w,l, s, 4, "Sheep", pos) {};
 
-class Sheep : public Animal
+void Sheep::draw() const {
+	textCustomizer::textcolor(LIGHTGREEN);
+	cout << SHEEP_CHAR;
+	textCustomizer::textcolor(WHITE);
+}
+
+Organism* Sheep::giveBirth(World& w, Logger& l, pair<int, int> pos)const 
 {
-public:
-	Sheep(World& w, Logger& l, pair<int, int> pos) :Animal(w,l, 4, 4, "Sheep", pos) {};
-
-	void draw() const override {
-		textCustomizer::textcolor(LIGHTGREEN);
-		cout << SHEEP_CHAR;
-		textCustomizer::textcolor(WHITE);
-	}
-
-	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos)const override
-	{
-		return new Sheep(w,l, pos);
-	}
-};
+	return new Sheep(w,l, pos);
+}

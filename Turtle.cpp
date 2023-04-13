@@ -1,31 +1,26 @@
-#include "Animal.h"
-#include <iostream>
+#include "Turtle.h"
 
-using namespace std;
+Turtle::Turtle(World& w, Logger& l, pair<int, int> pos, int s) :Animal(w, l, s, 1, "Turtle", pos) {};
 
-class Turtle : public Animal
+void Turtle::draw() const {
+	textCustomizer::textcolor(GREEN);
+	cout << TURTLE_CHAR;
+	textCustomizer::textcolor(WHITE);
+}
+
+float Turtle::chanceToStay() const
 {
-public:
-	Turtle(World& w, Logger& l, pair<int, int> pos) :Animal(w, l, 2, 1, "Turtle", pos) {};
+	return 0.75f;
+}
 
-	void draw() const override {
-		textCustomizer::textcolor(GREEN);
-		cout << TURTLE_CHAR;
-		textCustomizer::textcolor(WHITE);
-	}
-
-	float chanceToStay() const override
-	{
-		return 0.75f;
-	}
-
-	bool defenderDeflected(Animal* attacker) override
-	{
+bool Turtle::defenderDeflected(Animal* attacker) const
+{
+	if(attacker!=nullptr)
 		return attacker->getStrenght() < 5;
-	}
+	return false;
+}
 
-	Organism* giveBirth(World& w, Logger& l, pair<int, int> pos)const override
-	{
-		return new Turtle(w, l, pos);
-	}
-};
+Organism* Turtle::giveBirth(World& w, Logger& l, pair<int, int> pos)const
+{
+	return new Turtle(w, l, pos);
+}

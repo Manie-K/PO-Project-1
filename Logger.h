@@ -15,14 +15,14 @@ typedef enum {
 	SOW,
 	EAT,
 	POISON
-}Type;
+} Type;
 
 typedef struct {
 	string mess;
 	Type type;
-}LogString;
+} LogString;
 
-class Logger 
+class Logger
 {
 private:
 	const static int max_messages = LOG_MAX_MESSAGES;
@@ -32,6 +32,7 @@ private:
 	deque<LogString> logs;
 public:
 	Logger(const int x, const int y, InputManager& in);
+	Logger(const int x, const int y, InputManager& in, deque<LogString> log, bool add);
 	~Logger();
 	void display();
 	void textMenu() const;

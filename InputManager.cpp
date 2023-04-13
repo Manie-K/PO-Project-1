@@ -1,10 +1,11 @@
 #include "InputManager.h"
-#include <conio.h>
 
-InputManager::InputManager()
+InputManager::InputManager(int al, int ac)
 {
 	quit = save = load = arrowKey = false;
-	inputChar = abilityLeft = abilityCooldown= 0;
+	inputChar = 0;
+	abilityLeft = al;
+	abilityCooldown = ac;
 }
 
 InputManager::~InputManager(){}
@@ -41,13 +42,13 @@ void InputManager::input()
 	}
 }
 
-int InputManager::getAbility() const { return abilityLeft; }
-int InputManager::getAbilityCooldown() const { return abilityCooldown; }
-int InputManager::getInput() const{return inputChar;}
 bool InputManager::getQuit() const { return quit; }
 bool InputManager::getSave() const { return save; }
 bool InputManager::getLoad() const { return load; }
 bool InputManager::getArrowKey() const { return arrowKey; }
+int InputManager::getInput() const{return inputChar;}
+int InputManager::getAbility() const { return abilityLeft; }
+int InputManager::getAbilityCooldown() const { return abilityCooldown; }
 
 void InputManager::nextTurn()
 {
@@ -55,4 +56,15 @@ void InputManager::nextTurn()
 		abilityLeft--;
 	if (abilityCooldown > 0)
 		abilityCooldown--;
+}
+
+void InputManager::saveFile(fstream& f)
+{
+	f << abilityLeft << " " << abilityCooldown << endl;
+}
+InputManager* InputManager::loadFile(fstream& f)
+{
+	int abilityLeft, abilityCooldown;
+	f >> abilityLeft>> abilityCooldown;
+	return new InputManager(abilityLeft, abilityCooldown);
 }
