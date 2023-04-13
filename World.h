@@ -30,6 +30,6 @@ public:
 	void drawWorld();
 	void simulateTurn();
 
-	void saveFile(FILE* f);
-	static World* loadFile(FILE* f, Logger& logger, InputManager& input);
+	void saveFile(fstream& f);
+	static World* loadFile(fstream& f, Logger& logger, InputManager& input);
 };

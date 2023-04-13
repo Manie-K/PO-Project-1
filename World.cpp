@@ -1,6 +1,7 @@
 #include "Organism.h"
-#include <iostream>
 #include "Animal.h"
+#include <iostream>
+#include <fstream>
 
 World::World(int w, int h):width(w),height(h)
 {
@@ -125,49 +126,31 @@ Organism*& World::getOrganismAtPos(pair<int, int> pos)
 }
 
 
-void World::saveFile(FILE* f)
+void World::saveFile(fstream& f)
 {
-	fwrite(&width, sizeof(int), 1, f);
-	fwrite(&height, sizeof(int), 1, f);
 	int organismCount = organisms.size();
-	fwrite(&organismCount, sizeof(int), 1, f); 
-
+	f << width << " " << height << " " << organismCount << endl;
 	for (const Organism* org : organisms) {
 		if(org!=nullptr)
 			org->save(f);
 	}
-
-	for(int y = 0; y < height; y++)
-	{
-		for(int x = 0;  x< width; x++)
-		{
-			Organism* org = map[y][x];
-			if(org!=nullptr)
-				fwrite(org, sizeof(Organism), 1, f); 
-		}
-	}
 }
-World* World::loadFile(FILE* f,Logger& logger, InputManager& input)
+World* World::loadFile(fstream& f,Logger& logger, InputManager& input)
 {
-	int w, h;
-	fread(&w, sizeof(int), 1, f);
-	fread(&h, sizeof(int), 1, f);
+	int w, h, size;
+	f >> w >> h >> size;
 
 	World* world = new World(w, h);
-
-	int organismCount;
 	vector<Organism*> organisms;
-	
-	fread(&organismCount, sizeof(int), 1, f);
 
-	for (int i = 0; i < organismCount; i++) {
+	for (int i = 0; i < size; i++) {
 		organisms.push_back(Organism::load(f,*world,logger,input));
 	}
 
-	Organism*** map = new Organism * *[h];
+	Organism*** map = new Organism** [h];
 	for (int y = 0; y < h; y++)
 	{
-		map[y] = new Organism * [w];
+		map[y] = new Organism* [w];
 		for (int x = 0; x < w; x++)
 		{
 			map[y][x] = nullptr;

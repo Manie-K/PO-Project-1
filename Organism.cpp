@@ -1,5 +1,6 @@
 #include "Organism.h"
 #include "OrganismIncludeList.h"
+#include <fstream>
 
 using namespace std;
 
@@ -35,28 +36,16 @@ void Organism::killOrganism(Organism* victim)
 	replace(world.getOrganisms().begin(), world.getOrganisms().end(), victim, static_cast<Organism*>(nullptr));
 }
 
-void Organism::save(FILE* f)const
+void Organism::save(fstream& f)const
 {
-	fwrite(&strenght, sizeof(int), 1, f);
-	fwrite(&age, sizeof(int), 1, f);
-	int size = species.length();
-	fwrite(&size, sizeof(int), 1, f);
-	fwrite(species.c_str(), size, 1, f);
-	fwrite(&position.first, sizeof(int), 1, f);
-	fwrite(&position.second, sizeof(int), 1, f);
+	f << strenght <<" " << age << " " << species << " " << position.first << " " << position.second << endl;
 }
-Organism* Organism::load(FILE* f, World& wor, Logger& log, InputManager& input)
+Organism* Organism::load(fstream& f, World& wor, Logger& log, InputManager& input)
 {
 	int s, a, pf, ps;
-	fread(&s, sizeof(int), 1, f);
-	fread(&a, sizeof(int), 1, f);
-	int size;
-	fread(&size, sizeof(int), 1, f);
-	char* spec = new char[size+1];
-	fread(&spec, size, 1, f);
-	spec[size] = '\0';
-	fread(&pf, sizeof(int), 1, f);
-	fread(&ps, sizeof(int), 1, f);
+	string spec;
+	f >> s >> a >> spec >> pf >> ps;
+
 	pair<int, int> pos = make_pair<int, int>((int)pf, (int)ps);
 	if (spec == "Wolf")
 		return new Wolf(wor, log, pos, s);
@@ -75,10 +64,10 @@ Organism* Organism::load(FILE* f, World& wor, Logger& log, InputManager& input)
 	if (spec == "Dandelion")
 		return new Dandelion(wor, log, pos);
 	if (spec == "Guarana")
-		return new Wolf(wor, log, pos);
-	if (spec == "Wolf Berries")
-		return new Wolf(wor, log, pos);
-	if (spec == "Giant Hogweed")
-		return new Wolf(wor, log, pos);
+		return new Guarana(wor, log, pos);
+	if (spec == "WolfBerries")
+		return new WolfBerries(wor, log, pos);
+	if (spec == "GiantHogweed")
+		return new GiantHogweed(wor, log, pos);
 	
 }
