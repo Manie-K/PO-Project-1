@@ -26,15 +26,18 @@ class Logger
 {
 private:
 	const static int max_messages = LOG_MAX_MESSAGES;
-	static textCustomizer custom;
 	const int startX, startY;
 	bool added;
 	InputManager& input;
 	deque<LogString> logs;
 public:
 	Logger(const int x, const int y, InputManager& in);
+	Logger(const int x, const int y, InputManager& in, deque<LogString> log, bool add);
 	~Logger();
 	void display();
 	void textMenu() const;
 	void addLog(const LogString& log);
+
+	void saveFile(FILE* f);
+	static Logger* loadFile(FILE* f, InputManager& in);
 };

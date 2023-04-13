@@ -1,3 +1,4 @@
+#define _CRT_SECURE_NO_WARNINGS
 #include "Simulator.h"
 
 Simulator::Simulator()
@@ -5,7 +6,7 @@ Simulator::Simulator()
 	srand(time(NULL));
 	manager = new InputManager;
 	logger = new Logger(1,MAP_START_Y+MAP_H+LOG_POS_OFFSET,*manager);
-	world = new World(MAP_W, MAP_H, *logger);
+	world = new World(MAP_W, MAP_H);
 	setUpWorld();
 }
 Simulator::~Simulator()
@@ -20,18 +21,26 @@ Simulator::~Simulator()
 
 void Simulator::run()
 {
-	custom.disableCursor();
+	textCustomizer::disableCursor();
 	world->drawWorld();
 	logger->display();
 	while (!manager->getQuit())
 	{
 		manager->input();
-		if(manager->getArrowKey())
+		if (manager->getArrowKey())
 		{
 			world->simulateTurn();
 			world->drawWorld();
 			manager->nextTurn();
 			logger->display();
+		}
+		else if (manager->getLoad())
+		{
+			load();
+		}
+		else if (manager->getSave())
+		{
+			save();
 		}
 	}
 }
@@ -45,4 +54,65 @@ void Simulator::setUpWorld()
 	Guarana* gu1 = new Guarana(*world, *logger, {6, 2 });
 	WolfBerries* w1 = new WolfBerries(*world, *logger, { 7, 0 });
 	GiantHogweed* h1 = new GiantHogweed(*world, *logger, { 5, 1 });
+}
+
+void Simulator::save()
+{
+	system("cls");
+	textCustomizer::textcolor(LIGHTGREEN);
+	cout << "Wprowadz nazwe pliku zapisu: ";
+	string fName;
+	cin >> fName;
+	FILE* file = fopen(fName.c_str(), "wb");
+	try {
+		if (file) {
+			manager->saveFile(file);
+			logger->saveFile(file);
+			world->saveFile(file);
+			fclose(file);
+		}
+		else
+			throw runtime_error("Nie udalo sie zapisac do pliku\n");
+	}
+	catch (const exception& e)
+	{
+		cerr << "Error: " << e.what() << endl;
+	}
+	textCustomizer::textcolor(WHITE);
+	logger->addLog({ "Pomyslnie zapisano do pliku", INFO });
+	world->drawWorld();
+	logger->display();
+}
+
+void Simulator::load()
+{
+	system("cls");
+	textCustomizer::gotoxy(1, 1);
+	textCustomizer::textcolor(LIGHTGREEN);
+	cout << "Podaj nazwe pliku zapisu: ";
+	string fName;
+	cin >> fName;
+
+	FILE* file = fopen(fName.c_str(), "rb");
+	try {
+		delete world;
+		delete logger;
+		delete manager;
+		if (file) {
+			manager = InputManager::loadFile(file);
+			logger = Logger::loadFile(file,*manager);
+			world = World::loadFile(file,*logger,*manager);
+			fclose(file);
+			textCustomizer::textcolor(WHITE);
+			logger->addLog({ "Pomyslnie wczytano swiat",INFO });
+			world->drawWorld();
+			logger->display();
+		}
+		else
+			throw runtime_error("Nie udalo sie wczytac z pliku\n");
+	}
+	catch (const exception& e)
+	{
+		cerr << "Error: " << e.what() << endl;
+	}
 }

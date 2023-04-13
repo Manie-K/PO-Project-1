@@ -1,12 +1,15 @@
 #pragma once
-#include "textCustomiser.h"
+#include "textCustomizer.h"
 
 #define END_SIMULATION_KEY 'x'
 #define ABILITY_KEY 'm'
-#define UP_ARROW	'w'
-#define DOWN_ARROW  's'
-#define RIGHT_ARROW 'd'
-#define LEFT_ARROW  'a'
+#define SAVE_KEY 's'
+#define LOAD_KEY 'l'
+#define ARROW_MODIFIER_KEY 224
+#define UP_ARROW	72
+#define DOWN_ARROW  80
+#define RIGHT_ARROW 77
+#define LEFT_ARROW  75
 
 #define LOG_MAX_MESSAGES 12
 #define LOG_POS_OFFSET 4

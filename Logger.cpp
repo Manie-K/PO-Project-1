@@ -5,6 +5,17 @@ Logger::Logger(const int x, const int y, InputManager& in):startX(x),startY(y),a
 	logs.clear();
 }
 
+Logger::Logger(const int x, const int y, InputManager& in, deque<LogString> log, bool add) :startX(x), startY(y), added(add), input(in)
+{
+	int size = log.size();
+	logs.clear();
+	for (int i = 0; i < size; i++)
+	{
+		logs.push_back(logs[i]);
+	}
+}
+
+
 Logger::~Logger(){logs.clear();}
 
 void Logger::display()
@@ -15,39 +26,39 @@ void Logger::display()
 	auto it = logs.begin();
 	int i = 0;
 	while (i < max_messages && it != logs.end()) {
-		custom.gotoxy(startX, startY + i);
+		textCustomizer::gotoxy(startX, startY + i);
 		switch (logs.at(i).type)
 		{
 		case EMPTY:
-			custom.textcolor(WHITE);
+			textCustomizer::textcolor(WHITE);
 			break;
 		case INFO:
-			custom.textcolor(LIGHTBLUE);
+			textCustomizer::textcolor(LIGHTBLUE);
 			break;
 		case KILL:
-			custom.textcolor(RED);
+			textCustomizer::textcolor(RED);
 			break;
 		case BIRTH:
-			custom.textcolor(LIGHTGREEN);
+			textCustomizer::textcolor(LIGHTGREEN);
 			break;
 		case SOW:
-			custom.textcolor(GREEN);
+			textCustomizer::textcolor(GREEN);
 			break;
 		case EAT:
-			custom.textcolor(MAGENTA);
+			textCustomizer::textcolor(MAGENTA);
 			break;
 		case POISON:
-			custom.textcolor(YELLOW);
+			textCustomizer::textcolor(YELLOW);
 			break;
 		default:
-			custom.textcolor(BLACK);
+			textCustomizer::textcolor(BLACK);
 			break;
 		}
 		cout << logs.at(i).mess;
 		i++;
 		it++;
 	}
-	custom.textcolor(WHITE);
+	textCustomizer::textcolor(WHITE);
 	added = false;
 }
 
@@ -57,52 +68,56 @@ void Logger::textMenu() const
 	const int y = MAP_START_Y;
 
 	int i = y;
-	custom.gotoxy(x, i++);
-	custom.textcolor(LIGHTGREEN);
+	textCustomizer::gotoxy(x, i++);
+	textCustomizer::textcolor(LIGHTGREEN);
 	cout << "MACIEJ GORALCZYK 193302";
-	custom.gotoxy(x, i++);
-	custom.textcolor(MAGENTA);
+	textCustomizer::gotoxy(x, i++);
+	textCustomizer::textcolor(MAGENTA);
 	cout << "Legenda (pl):";
-	custom.gotoxy(x, i++);
-	custom.textcolor(CYAN);
+	textCustomizer::gotoxy(x, i++);
+	textCustomizer::textcolor(CYAN);
 	cout << ABILITY_KEY << " - Umiejetnosc specjalna czlowieka";
-	custom.gotoxy(x, i++);
+	textCustomizer::gotoxy(x, i++);
 	cout << END_SIMULATION_KEY << " - Zakoncz symulacje";
-	custom.gotoxy(x, i++);
-	custom.textcolor(BROWN);
+	textCustomizer::gotoxy(x, i++);
+	cout << SAVE_KEY << " - Zapisz";
+	textCustomizer::gotoxy(x, i++);
+	cout << LOAD_KEY << " - Wczytaj";
+	textCustomizer::gotoxy(x, i++);
+	textCustomizer::textcolor(BROWN);
 	cout << "Umiejetnosc specjalna (pozostalo tur) : " << input.getAbility();
-	custom.gotoxy(x, i++);
+	textCustomizer::gotoxy(x, i++);
 	cout << "Umiejetnosc specjalna (cooldown) : " << input.getAbilityCooldown();
-	custom.gotoxy(x, i++);
-	custom.textcolor(DARKGRAY);
+	textCustomizer::gotoxy(x, i++);
+	textCustomizer::textcolor(DARKGRAY);
 	cout << "Postacie:";
-	custom.gotoxy(x, i++);
-	custom.textcolor(YELLOW);
+	textCustomizer::gotoxy(x, i++);
+	textCustomizer::textcolor(YELLOW);
 	cout << HUMAN_CHAR << " - Czlowiek";
-	custom.gotoxy(x, i++);
-	custom.textcolor(RED);
+	textCustomizer::gotoxy(x, i++);
+	textCustomizer::textcolor(RED);
 	cout << WOLF_CHAR << " - Wilk";
-	custom.gotoxy(x, i++);
+	textCustomizer::gotoxy(x, i++);
 	cout << SHEEP_CHAR << " - Owca";
-	custom.gotoxy(x, i++);
+	textCustomizer::gotoxy(x, i++);
 	cout << FOX_CHAR << " - Lis";
-	custom.gotoxy(x, i++);
+	textCustomizer::gotoxy(x, i++);
 	cout << TURTLE_CHAR << " - Zolw";
-	custom.gotoxy(x, i++);
+	textCustomizer::gotoxy(x, i++);
 	cout << ANTELOPE_CHAR << " - Antyloopa";
-	custom.gotoxy(x, i++);
-	custom.textcolor(GREEN);
+	textCustomizer::gotoxy(x, i++);
+	textCustomizer::textcolor(GREEN);
 	cout << GRASS_CHAR << " - Trawa";
-	custom.gotoxy(x, i++);
+	textCustomizer::gotoxy(x, i++);
 	cout << DANDELION_CHAR << " - Mlecz";
-	custom.gotoxy(x, i++);
+	textCustomizer::gotoxy(x, i++);
 	cout << GUARANA_CHAR << " - Guarana";
-	custom.gotoxy(x, i++);
+	textCustomizer::gotoxy(x, i++);
 	cout << WOLF_BERRIES_CHAR << " - Wilcze Jagody";
-	custom.gotoxy(x, i++);
+	textCustomizer::gotoxy(x, i++);
 	cout << GIANT_HOGWEED_CHAR << " - Barszcz Sosnowskiego";
-	custom.gotoxy(x, i++);
-	custom.textcolor(WHITE);
+	textCustomizer::gotoxy(x, i++);
+	textCustomizer::textcolor(WHITE);
 }
 
 void Logger::addLog(const LogString& log)
@@ -111,4 +126,47 @@ void Logger::addLog(const LogString& log)
 	logs.push_front(log);
 	if (logs.size() > max_messages)
 		logs.pop_back();
+}
+
+void Logger::saveFile(FILE* f)
+{
+	fwrite(&startX, sizeof(int), 1, f);
+	fwrite(&startY, sizeof(int), 1, f);
+	fwrite(&added, sizeof(bool), 1, f);
+	int size = logs.size();
+	fwrite(&size, sizeof(int), 1, f);
+	for (auto i : logs) {
+		int size = (int)i.mess.size();
+		int en = i.type;
+		fwrite(&size, sizeof(int), 1, f);
+		fwrite(&i.mess, size, 1, f);
+		fwrite(&en, sizeof(int), 1, f);
+	}
+}
+Logger* Logger::loadFile(FILE* f, InputManager& in)
+{
+	deque<LogString> logs;
+	int startX, startY;
+	bool added;
+	int size;
+	fread(&startX, sizeof(int), 1, f);
+	fread(&startY, sizeof(int), 1, f);
+	fread(&added, sizeof(bool), 1, f);
+	fread(&size, sizeof(size_t), 1, f); // read the size of the deque from the file
+
+	for (int i = 0; i < size; i++) {
+		LogString elem;
+		int size;
+		Type type;
+		fread(&size, sizeof(int), 1, f);
+		char* temp = new char[size + 1];
+		fread(&temp, size, 1, f); // read each element of the deque from the file
+		temp[size] = '\0';
+		fread(&type, sizeof(int), 1, f); // read each element of the deque from the file
+		elem.mess = string(temp);
+		elem.type = type;
+		logs.push_back(elem);
+	}
+
+	return new Logger(startX, startY, in, logs, added);
 }
