@@ -19,9 +19,6 @@
 #define ABILITY_COOLDOWN 10
 #define PLANT_SEED_CHANCE 0.18
 
-#define MAP_W 40
-#define MAP_H 20
-
 #define MAP_START_X 1
 #define MAP_START_Y 1
 #define BORDER_CHAR '#'

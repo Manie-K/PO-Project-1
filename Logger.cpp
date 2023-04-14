@@ -1,11 +1,11 @@
 #include "Logger.h"
 
-Logger::Logger(const int x, const int y, InputManager& in):startX(x),startY(y),added(false),input(in)
+Logger::Logger(const int x, const int y, const int w, InputManager& in):startX(x),startY(y), worldWidth(w),added(false), input(in)
 {
 	logs.clear();
 }
 
-Logger::Logger(const int x, const int y, InputManager& in, deque<LogString> log, bool add) :startX(x), startY(y), added(add), input(in)
+Logger::Logger(const int x, const int y,const int w, InputManager& in, deque<LogString> log, bool add) :startX(x), startY(y),worldWidth(w), added(add), input(in)
 {
 	int size = log.size();
 	logs.clear();
@@ -67,7 +67,7 @@ void Logger::display()
 
 void Logger::textMenu() const
 {
-	const int x = MAP_START_X + MAP_W + 35;
+	const int x = MAP_START_X + worldWidth + 35;
 	const int y = MAP_START_Y;
 
 	int i = y;

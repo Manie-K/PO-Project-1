@@ -31,12 +31,12 @@ void Simulator::setUpWorld()
 
 }
 
-Simulator::Simulator()
+Simulator::Simulator(const unsigned int w, unsigned int h):w(w),h(h)
 {
 	srand(time(NULL));
 	manager = new InputManager;
-	logger = new Logger(1,MAP_START_Y+MAP_H+LOG_POS_OFFSET,*manager);
-	world = new World(MAP_W, MAP_H);
+	logger = new Logger(1,MAP_START_Y+h+LOG_POS_OFFSET,w,*manager);
+	world = new World(w, h);
 	setUpWorld();
 }
 Simulator::~Simulator()
@@ -123,7 +123,7 @@ void Simulator::load()
 		delete manager;
 		if (file.good()) {
 			manager = InputManager::loadFile(file);
-			logger = new Logger(1, MAP_START_Y + MAP_H + LOG_POS_OFFSET,*manager);
+			logger = new Logger(1, MAP_START_Y + h + LOG_POS_OFFSET,w,*manager);
 			world = World::loadFile(file,*logger,*manager);
 			file.close();
 			textCustomizer::textcolor(WHITE);

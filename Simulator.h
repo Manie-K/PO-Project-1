@@ -11,13 +11,13 @@ private:
 	World* world;
 	Logger* logger;
 	InputManager* manager;
-
+	const int w, h;
 private:
 	void setUpWorld(); //here are the initial conditions
 	void save();
 	void load();
 public:
-	Simulator();
+	Simulator(const unsigned int w,const unsigned int h);
 	~Simulator();
 	void run();
 };

@@ -26,13 +26,13 @@ class Logger
 {
 private:
 	const static int max_messages = LOG_MAX_MESSAGES;
-	const int startX, startY;
+	const int startX, startY, worldWidth;
 	bool added;
 	InputManager& input;
 	deque<LogString> logs;
 public:
-	Logger(const int x, const int y, InputManager& in);
-	Logger(const int x, const int y, InputManager& in, deque<LogString> log, bool add);
+	Logger(const int x, const int y, const int w, InputManager& in);
+	Logger(const int x, const int y, const int w, InputManager& in, deque<LogString> log, bool add);
 	~Logger();
 	void display();
 	void textMenu() const;
